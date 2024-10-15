@@ -1,0 +1,110 @@
+# This .gitignore file is for Unity projects.
+
+# Unity generated folders
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Mm]emoryCaptures/
+
+# Asset meta data should only be tracked along with Assets folder
+/[Aa]ssets/**/*.meta
+
+# Auto-generated VS/MD solution and project files
+ExportedObj/
+.consulo/
+/.idea/
+/*.csproj
+/*.unityproj
+/*.sln
+/*.suo
+/*.tmp
+/*.user
+/*.userprefs
+/*.pidb
+/*.booproj
+/*.svd
+*.pidb.meta
+*.pdb
+*.mdb
+*.opendb
+*.VC.db
+
+# Crashlytics generated files
+fabric.properties
+
+# Uncomment if you have tasks set up in Unity and want to ignore their results
+# /[Tt]asks/
+
+# Unity Cache Server
+/[Cc]ache/
+
+# Ignore Burst cache (Unity Burst Compiler)
+[Bb]urstCache/
+
+# Ignore Auto Saves
+/[Aa]uto[Ss]aves/
+
+# Ignore Unity Package Manager Files
+Packages/manifest.json
+Packages/packages-lock.json
+
+# Project Settings
+ProjectSettings/ProjectVersion.txt
+ProjectSettings/EditorBuildSettings.asset
+ProjectSettings/ProjectSettings.asset
+
+# User-specific settings
+UserSettings/
+.vscode/
+.vs/
+*.swp
+*.lock
+
+# Mac specific
+*.DS_Store
+._*
+
+# Windows specific
+Thumbs.db
+Desktop.ini
+
+# Builds
+[Bb]uilds/
+*.apk
+*.aab
+*.xcodeproj
+*.xcworkspace
+
+# IDE-specific files (optional)
+.idea/
+.vscode/
+mono_crash.*
+
+# Exclude temporary Unity Play Mode test files
+/[Tt]est[Rr]esults/
+
+# Gradle cache (if using Android)
+.gradle/
+
+# Android/iOS specific folders
+/[Dd]ebugLogs/
+**/DerivedData/
+*.ipa
+*.apk
+*.aab
+*.xcuserstate
+
+# JetBrains Rider
+.idea/
+.idea_modules/
+.editorconfig
+.idea/workspace.xml
+
+# Exclude build results for iOS
+/DerivedData/
+
+# Uncomment if you're using JetBrains Rider and want to ignore Rider's cache folder
+# /.idea/
