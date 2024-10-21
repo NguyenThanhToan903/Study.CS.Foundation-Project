@@ -28,11 +28,11 @@ public class RabbitAI : MonoBehaviour
             // Quay thỏ theo hướng di chuyển chỉ theo trục X
             if (direction.x < 0)
             {
-                transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z); // Quay sang trái
+                transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z); // Quay sang trái
             }
             else if (direction.x > 0)
             {
-                transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z); // Quay sang phải
+                transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z); // Quay sang phải
             }
 
             // Kiểm tra nếu thỏ chạm tới giới hạn vùng spawn

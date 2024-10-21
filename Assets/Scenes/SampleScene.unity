@@ -5179,6 +5179,7 @@ MonoBehaviour:
   move: {x: 0, y: 0, z: 0}
   moveSpeed: 5
   model: {fileID: 1680036248346864976}
+  moving: 0
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -5365,6 +5366,55 @@ Transform:
   - {fileID: 1855337484}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &749290411
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 749290413}
+  - component: {fileID: 749290412}
+  m_Layer: 0
+  m_Name: RabbitSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &749290412
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 749290411}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6801ef110ec6f0a45a66a7860ac2d3c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rabbitPrefab: {fileID: 4530293517684451087, guid: d212e5fb765029d43904e819e97f521f, type: 3}
+  numberOfRabbits: 5
+  spawnAreaMin: {x: 1, y: 1}
+  spawnAreaMax: {x: 10, y: 8}
+  gizmoColor: {r: 1, g: 0.31035972, b: 0, a: 1}
+--- !u!4 &749290413
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 749290411}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &861765715
 GameObject:
   m_ObjectHideFlags: 0
@@ -5409,6 +5459,63 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9f8ac84912b83249acaf9c3f9c31ce3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1001 &1484323210
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4530293517684451087, guid: d212e5fb765029d43904e819e97f521f, type: 3}
+      propertyPath: m_Name
+      value: Rabbit
+      objectReference: {fileID: 0}
+    - target: {fileID: 6338021871002053025, guid: d212e5fb765029d43904e819e97f521f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 3.57
+      objectReference: {fileID: 0}
+    - target: {fileID: 6338021871002053025, guid: d212e5fb765029d43904e819e97f521f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.0403
+      objectReference: {fileID: 0}
+    - target: {fileID: 6338021871002053025, guid: d212e5fb765029d43904e819e97f521f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6338021871002053025, guid: d212e5fb765029d43904e819e97f521f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6338021871002053025, guid: d212e5fb765029d43904e819e97f521f, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6338021871002053025, guid: d212e5fb765029d43904e819e97f521f, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6338021871002053025, guid: d212e5fb765029d43904e819e97f521f, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6338021871002053025, guid: d212e5fb765029d43904e819e97f521f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6338021871002053025, guid: d212e5fb765029d43904e819e97f521f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6338021871002053025, guid: d212e5fb765029d43904e819e97f521f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: d212e5fb765029d43904e819e97f521f, type: 3}
 --- !u!1 &1772459325
 GameObject:
   m_ObjectHideFlags: 0
@@ -7594,7 +7701,9 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 519420032}
+  - {fileID: 861765717}
   - {fileID: 1772459326}
+  - {fileID: 749290413}
   - {fileID: 655448467}
   - {fileID: 2053460386}
-  - {fileID: 861765717}
+  - {fileID: 1484323210}
