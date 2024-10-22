@@ -33,10 +33,10 @@ TagManager:
   - 
   - 
   - 
+  - Tree
   - 
-  - 
-  - 
-  - 
+  - Wall
+  - Round
   m_SortingLayers:
   - name: Default
     uniqueID: 0

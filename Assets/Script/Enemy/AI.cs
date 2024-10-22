@@ -2,17 +2,17 @@
 
 public class RabbitAI : MonoBehaviour
 {
-    private Vector2 spawnAreaMin;  // Điểm bắt đầu của vùng spawn (x,y)
-    private Vector2 spawnAreaMax;  // Điểm kết thúc của vùng spawn (x,y)
-    public float moveSpeed = 2f;   // Tốc độ di chuyển
-    public float restDuration = 1f; // Thời gian nghỉ sau khi di chuyển
-    private Vector2 direction;  // Hướng di chuyển
-    private bool isMoving = true;  // Thỏ bắt đầu di chuyển
+    private Vector2 spawnAreaMin;
+    private Vector2 spawnAreaMax;
+    public float moveSpeed = 2f;
+    public float restDuration = 1f;
+    private Vector2 direction;
+    private bool isMoving = true;
     private float timer = 0f;
 
     void Start()
     {
-        // Chọn một hướng di chuyển ngẫu nhiên ban đầu
+
         ChooseNewDirection();
     }
 
