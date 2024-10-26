@@ -12,5 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68905db344dc404459e9fc59f13bb0dc, type: 3}
   m_Name: ListRabbitVariable
   m_EditorClassIdentifier: 
-  rabbitMovement:
-  - {fileID: 0}
+  rabbitMovement: []

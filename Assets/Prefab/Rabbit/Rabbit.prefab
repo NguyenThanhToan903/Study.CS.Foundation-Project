@@ -9,10 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3225538735493491365}
-  - component: {fileID: 605871341163126487}
   - component: {fileID: 7077959273255139221}
   - component: {fileID: 1353400127104348694}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: rabbit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -36,58 +35,6 @@ Transform:
   - {fileID: 2277925163186801753}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &605871341163126487
-SpriteRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 778282378860521684}
-  m_Enabled: 1
-  m_CastShadows: 0
-  m_ReceiveShadows: 0
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 0
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 0
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: -8324782874320173768, guid: 4837de42ca3dbb44fad933505c6edecb, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
-  m_FlipY: 0
-  m_DrawMode: 0
-  m_Size: {x: 0.59, y: 0.56}
-  m_AdaptiveModeThreshold: 0.5
-  m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
 --- !u!70 &7077959273255139221
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -120,8 +67,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.31659573, y: -1.4563398}
-  m_Size: {x: 2.0160105, y: 1.0873284}
+  m_Offset: {x: 0.11719723, y: -1.0065279}
+  m_Size: {x: 3.4350452, y: 1.9869708}
   m_Direction: 1
 --- !u!50 &1353400127104348694
 Rigidbody2D:
@@ -131,11 +78,11 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 778282378860521684}
-  m_BodyType: 2
+  m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 1000
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 0
@@ -148,7 +95,7 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!1 &1749792475998180969
 GameObject:
@@ -160,7 +107,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2277925163186801753}
   - component: {fileID: 3183886411191665312}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: RabbitMovement
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -195,6 +142,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   model: {fileID: 1883121320689261907}
+  speed: 2
+  moveDuration: 1
 --- !u!1 &1883121320689261907
 GameObject:
   m_ObjectHideFlags: 0
@@ -206,7 +155,7 @@ GameObject:
   - component: {fileID: 9209631680153974682}
   - component: {fileID: 7813067401190211836}
   - component: {fileID: 7534729538016573495}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}

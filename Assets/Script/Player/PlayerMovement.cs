@@ -41,6 +41,7 @@ public class PlayerMovement : MonoBehaviour
         x = move.x;
         y = move.y;
     }
+
     private void Move()
     {
         if (move != Vector3.zero)
@@ -52,14 +53,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Animate()
     {
-        if (move.magnitude > 0.1f || move.magnitude < -0.1f)
-        {
-            moving = true;
-        }
-        else
-        {
-            moving = false;
-        }
+        moving = move.magnitude > 0.1f;
 
         if (moving)
         {
@@ -67,5 +61,14 @@ public class PlayerMovement : MonoBehaviour
             animator.SetFloat("Y", y);
         }
         animator.SetBool("Moving", moving);
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Rabbit"))
+        {
+            // Ngăn không cho người chơi bị đẩy ra khi va chạm với thỏ
+            Physics2D.IgnoreCollision(rb.GetComponent<Collider2D>(), collision.collider);
+        }
     }
 }
