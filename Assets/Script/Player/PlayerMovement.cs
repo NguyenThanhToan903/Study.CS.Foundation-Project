@@ -68,13 +68,13 @@ public class PlayerMovement : MonoBehaviour
         animator.SetBool("Moving", moving);
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Rabbit"))
-        {
-            Physics2D.IgnoreCollision(rb.GetComponent<Collider2D>(), collision.collider);
-        }
-    }
+    //private void OnCollisionEnter2D(Collision2D collision)
+    //{
+    //    if (collision.gameObject.CompareTag("Rabbit"))
+    //    {
+    //        Physics2D.IgnoreCollision(rb.GetComponent<Collider2D>(), collision.collider);
+    //    }
+    //}
 
     //private void OnDrawGizmos()
     //{

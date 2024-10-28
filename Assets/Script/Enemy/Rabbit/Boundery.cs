@@ -1,35 +1,12 @@
-﻿using Unity.VisualScripting;
-using UnityEngine;
+﻿using UnityEngine;
 
-[CreateAssetMenu(menuName = "ScriptableObject/Boudery")]
-
-public class Boundery : ScriptableObject
+[CreateAssetMenu(menuName = "ScriptableObject/Boundary")]
+public class Boundary : ScriptableObject
 {
-    private float xLimit;
-    private float yLimit;
+    [SerializeField] private float radius = 10f;
 
-    public float XLimit
-    {
+    public float Radius => radius;
 
-        get
-        {
-            CalculateLimit();
-            return xLimit;
-        }
-    }
 
-    public float YLimit
-    {
-
-        get
-        {
-            CalculateLimit();
-            return yLimit;
-        }
-    }
-    private void CalculateLimit()
-    {
-        yLimit = Camera.main.orthographicSize + 1f;
-        xLimit = yLimit * Screen.width / Screen.height + 1f;
-    }
+    public Vector3 Center { get; set; }
 }
