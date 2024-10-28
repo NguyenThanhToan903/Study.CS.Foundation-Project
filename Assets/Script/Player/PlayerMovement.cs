@@ -2,17 +2,22 @@
 
 public class PlayerMovement : MonoBehaviour
 {
+    private static PlayerMovement instance;
+    public static PlayerMovement Instance { get => instance; set => instance = value; }
+
     [SerializeField] private Vector3 move;
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private GameObject model;
-
     private Animator animator;
     private Rigidbody2D rb;
     [SerializeField] private bool moving = false;
     private float x, y;
 
     private void Awake()
+
+
     {
+        PlayerMovement.instance = this;
         if (model != null)
         {
             animator = model.GetComponent<Animator>();
@@ -70,4 +75,12 @@ public class PlayerMovement : MonoBehaviour
             Physics2D.IgnoreCollision(rb.GetComponent<Collider2D>(), collision.collider);
         }
     }
+
+    //private void OnDrawGizmos()
+    //{
+    //    Gizmos.color = Color.green; // Màu của gizmos cho người chơi
+    //    Gizmos.DrawWireSphere(transform.position, 5f); // Vẽ hình cầu xung quanh người chơi
+
+    //}
+
 }

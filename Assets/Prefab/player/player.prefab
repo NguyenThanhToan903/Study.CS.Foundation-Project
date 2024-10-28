@@ -115,7 +115,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8507348062171486368}
-  - component: {fileID: 6736398941258867329}
   m_Layer: 9
   m_Name: PlayerMovement
   m_TagString: Untagged
@@ -138,22 +137,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1057956945527203743}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6736398941258867329
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5485799440048848326}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e8dd660289436ac40a5c9f561d41801a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  move: {x: 0, y: 0, z: 0}
-  moveSpeed: 5
-  model: {fileID: 360773333256469819}
-  moving: 0
 --- !u!1 &5930909219923907213
 GameObject:
   m_ObjectHideFlags: 0
@@ -165,6 +148,7 @@ GameObject:
   - component: {fileID: 1057956945527203743}
   - component: {fileID: 3580473231906794222}
   - component: {fileID: 5853640336284858872}
+  - component: {fileID: 5642381549501237832}
   m_Layer: 9
   m_Name: Player
   m_TagString: Untagged
@@ -261,3 +245,19 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.4537573, y: 0.57735515}
   m_EdgeRadius: 0
+--- !u!114 &5642381549501237832
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5930909219923907213}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8dd660289436ac40a5c9f561d41801a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  move: {x: 0, y: 0, z: 0}
+  moveSpeed: 5
+  model: {fileID: 360773333256469819}
+  moving: 0
