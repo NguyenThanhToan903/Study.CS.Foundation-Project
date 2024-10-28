@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 3225538735493491365}
   - component: {fileID: 7077959273255139221}
   - component: {fileID: 1353400127104348694}
+  - component: {fileID: 9016305248538596199}
+  - component: {fileID: 3083852373531468195}
   m_Layer: 10
   m_Name: rabbit
   m_TagString: Untagged
@@ -32,7 +34,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 9209631680153974682}
-  - {fileID: 2277925163186801753}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!70 &7077959273255139221
@@ -95,55 +96,41 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
   m_Constraints: 4
---- !u!1 &1749792475998180969
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2277925163186801753}
-  - component: {fileID: 3183886411191665312}
-  m_Layer: 10
-  m_Name: RabbitMovement
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2277925163186801753
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1749792475998180969}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 3225538735493491365}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3183886411191665312
+--- !u!114 &9016305248538596199
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1749792475998180969}
+  m_GameObject: {fileID: 778282378860521684}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: be4d5d94f9053be47975c821fb4c07f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  model: {fileID: 1883121320689261907}
-  speed: 2
-  moveDuration: 1
+  rabbits: {fileID: 11400000, guid: d647109b89881e342a2a80e68a36e386, type: 2}
+  radius: 2
+  visionAngle: 270
+  forwardSpeed: 5
+  turnSpeed: 10
+  separationWeight: 1
+  alignmentWeight: 1
+  cohesionWeight: 1
+--- !u!114 &3083852373531468195
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 778282378860521684}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69d443de64afd674c87a4f2e2151687c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  boundery: {fileID: 11400000, guid: f664354e66081d94d91fdc8e1b670c0b, type: 2}
 --- !u!1 &1883121320689261907
 GameObject:
   m_ObjectHideFlags: 0

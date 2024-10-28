@@ -67,7 +67,6 @@ public class PlayerMovement : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Rabbit"))
         {
-            // Ngăn không cho người chơi bị đẩy ra khi va chạm với thỏ
             Physics2D.IgnoreCollision(rb.GetComponent<Collider2D>(), collision.collider);
         }
     }
