@@ -110,7 +110,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 2
-  slowSpeed: 1.5
+  slowSpeed: 1
   model: {fileID: 1883121320689261907}
   detectionRadius: 4
   velocity: {x: 0, y: 0}

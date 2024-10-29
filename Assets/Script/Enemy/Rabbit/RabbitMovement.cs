@@ -23,6 +23,8 @@ public class RabbitMovement : MonoBehaviour
 
     private Boundary boundary;
 
+    private float timeSinceLastUpdate = 0f;
+
     private float randomDirectionTimer = 0f; // Thời gian để tạo hướng ngẫu nhiên
     private float randomDirectionInterval = 2f; // Thời gian giữa các lần tạo hướng ngẫu nhiên
 
@@ -52,6 +54,7 @@ public class RabbitMovement : MonoBehaviour
         {
             modelTransform.localScale = new Vector3(1, 1, 1);
         }
+
         Move();
     }
 
@@ -121,13 +124,12 @@ public class RabbitMovement : MonoBehaviour
         CheckBoundary(); // Kiểm tra biên trước khi tránh người chơi
     }
 
-
     private void CheckBoundary()
     {
         float distanceToCenter = Vector3.Distance(transform.position, boundary.Center);
         Debug.Log("Distance to center: " + distanceToCenter);
-
-        if (distanceToCenter >= boundary.Radius - 1f)
+        timeSinceLastUpdate += Time.deltaTime;
+        if (distanceToCenter >= boundary.Radius - 1f && timeSinceLastUpdate >= 2f)
         {
             // Tính toán vector hướng vào tâm
             Vector2 directionToCenter = (boundary.Center - transform.position).normalized;
@@ -147,11 +149,17 @@ public class RabbitMovement : MonoBehaviour
 
             // Giảm tốc độ khi ở gần biên
             transform.position += (Vector3)(velocity * slowSpeed) * Time.deltaTime;
+            timeSinceLastUpdate = 0f;
+
+            if (Vector2.Distance(transform.position, playerTransform.position) < detectionRadius)
+            {
+                directionToPlayer = (Vector2)(transform.position - playerTransform.position).normalized;
+                //Vector2 playerDirection = (Vector2)(playerTransform.position - transform.position);
+                velocity = (directionToPlayer + (directionToCenter * 0.7f) + velocity * 1.3f).normalized;
+            }
         }
         else
         {
-            // Tính toán vector từ người chơi đến thỏ
-
             if (Vector2.Distance(transform.position, playerTransform.position) < detectionRadius)
             {
                 directionToPlayer = (Vector2)(transform.position - playerTransform.position).normalized;
@@ -159,15 +167,59 @@ public class RabbitMovement : MonoBehaviour
 
                 //Vector2 playerDirection = (Vector2)(playerTransform.position - transform.position);
 
-                velocity = (directionToPlayer + (directionToCenter * 0.7f) + velocity).normalized;
+                velocity = (directionToPlayer + (directionToCenter * 0.7f) + velocity * 1.3f).normalized;
             }
-
             // Nếu người chơi tiến gần, thỏ sẽ lấy vector của người chơi trừ vector của thỏ
-
             // Di chuyển thỏ theo vector hiện tại
             transform.position += (Vector3)(velocity * speed) * Time.deltaTime;
         }
     }
+
+
+    //private void CheckBoundary()
+    //{
+    //    Vector2 center = boundary.Center;
+    //    float halfBoundarySize = boundary.Size / 2f;
+
+    //    // Tính toán biên của hình vuông
+    //    float leftBoundary = center.x - halfBoundarySize;
+    //    float rightBoundary = center.x + halfBoundarySize;
+    //    float topBoundary = center.y + halfBoundarySize + 3f;
+    //    float bottomBoundary = center.y - halfBoundarySize - 3f;
+
+    //    Vector2 directionToCenter = (center - (Vector2)transform.position).normalized;
+
+    //    // Nếu thỏ gần với biên của hình vuông
+    //    if ((transform.position.x <= leftBoundary || transform.position.x >= rightBoundary ||
+    //        transform.position.y <= bottomBoundary || transform.position.y >= topBoundary) && timeSinceLastUpdate >= 2f)
+    //    {
+    //        // Random góc ±45 độ từ hướng vào tâm
+    //        float leftAngle = Mathf.Atan2(directionToCenter.y, directionToCenter.x) * Mathf.Rad2Deg - 45f;
+    //        float rightAngle = Mathf.Atan2(directionToCenter.y, directionToCenter.x) * Mathf.Rad2Deg + 45f;
+    //        float randomAngle = Random.Range(leftAngle, rightAngle);
+
+    //        // Tính toán vector ngẫu nhiên từ góc random
+    //        Vector2 randomDirection = new Vector2(Mathf.Cos(randomAngle * Mathf.Deg2Rad), Mathf.Sin(randomAngle * Mathf.Deg2Rad)).normalized;
+
+    //        // Cập nhật hướng di chuyển với tốc độ chậm
+    //        velocity = randomDirection;
+    //        transform.position += (Vector3)(velocity * slowSpeed) * Time.deltaTime;
+    //        timeSinceLastUpdate = 0f;
+    //    }
+    //    else
+    //    {
+    //        // Nếu gần người chơi, lấy vector né người chơi + hướng vào tâm
+    //        if (Vector2.Distance(transform.position, playerTransform.position) < detectionRadius)
+    //        {
+    //            Vector2 directionToPlayer = (Vector2)(transform.position - playerTransform.position).normalized;
+    //            velocity = (directionToPlayer + (directionToCenter * 0.7f)).normalized;
+    //        }
+
+    //        // Di chuyển thỏ theo tốc độ bình thường
+    //        transform.position += (Vector3)(velocity * speed) * Time.deltaTime;
+    //    }
+    //}
+
 
     private void SetRandomDirection()
     {
@@ -226,21 +278,40 @@ public class RabbitMovement : MonoBehaviour
         Gizmos.color = Color.blue;
         Gizmos.DrawLine(transform.position, transform.position + (Vector3)velocity);
 
+        // Vẽ boundary hình vuông
+        if (boundary != null)
+        {
+            Vector2 center = boundary.Center;
+            float halfBoundarySize = boundary.Size / 2f;
+
+            // Các đỉnh của hình vuông
+            Vector2 topLeft = new Vector2(center.x - halfBoundarySize, center.y + halfBoundarySize);
+            Vector2 topRight = new Vector2(center.x + halfBoundarySize, center.y + halfBoundarySize);
+            Vector2 bottomLeft = new Vector2(center.x - halfBoundarySize, center.y - halfBoundarySize);
+            Vector2 bottomRight = new Vector2(center.x + halfBoundarySize, center.y - halfBoundarySize);
+
+            // Vẽ các cạnh của hình vuông
+            Gizmos.color = Color.cyan;
+            Gizmos.DrawLine(topLeft, topRight);
+            Gizmos.DrawLine(topRight, bottomRight);
+            Gizmos.DrawLine(bottomRight, bottomLeft);
+            Gizmos.DrawLine(bottomLeft, topLeft);
+        }
+
         // Vẽ vector hướng vào tâm
         if (boundary != null)
         {
-            Gizmos.color = Color.magenta; // Màu sắc cho vector hướng vào tâm
+            Gizmos.color = Color.magenta;
             Gizmos.DrawLine(transform.position, boundary.Center);
 
             // Vẽ vector mở rộng
             float leftAngle = Mathf.Atan2((boundary.Center - transform.position).y, (boundary.Center - transform.position).x) * Mathf.Rad2Deg - 45f;
             float rightAngle = Mathf.Atan2((boundary.Center - transform.position).y, (boundary.Center - transform.position).x) * Mathf.Rad2Deg + 45f;
 
-            // Vẽ các đường đến biên
             Vector2 leftDirection = new Vector2(Mathf.Cos(leftAngle * Mathf.Deg2Rad), Mathf.Sin(leftAngle * Mathf.Deg2Rad));
             Vector2 rightDirection = new Vector2(Mathf.Cos(rightAngle * Mathf.Deg2Rad), Mathf.Sin(rightAngle * Mathf.Deg2Rad));
 
-            Gizmos.color = Color.yellow; // Màu sắc cho các vector mở rộng
+            Gizmos.color = Color.yellow;
             Gizmos.DrawLine(transform.position, transform.position + (Vector3)leftDirection * 2f);
             Gizmos.DrawLine(transform.position, transform.position + (Vector3)rightDirection * 2f);
         }
@@ -255,6 +326,7 @@ public class RabbitMovement : MonoBehaviour
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, detectionRadius);
     }
+
 
 
 

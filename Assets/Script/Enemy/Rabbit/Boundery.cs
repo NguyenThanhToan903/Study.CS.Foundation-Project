@@ -7,6 +7,9 @@ public class Boundary : ScriptableObject
 
     public float Radius => radius;
 
+    [SerializeField] private float size = 5f;
+
+    public float Size => size;
 
     public Vector3 Center { get; set; }
 }

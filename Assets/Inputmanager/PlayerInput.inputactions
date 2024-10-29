@@ -1,0 +1,34 @@
+{
+    "name": "PlayerInput",
+    "maps": [
+        {
+            "name": "Combat",
+            "id": "a609f096-65ea-4611-b7ed-a23d8bb4f10f",
+            "actions": [
+                {
+                    "name": "Catch",
+                    "type": "Button",
+                    "id": "d5d97972-93c4-4425-82b1-5f4fec171896",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "a3a22c4a-3419-4c3d-92dd-674452cbccca",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Catch",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
