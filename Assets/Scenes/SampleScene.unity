@@ -12404,6 +12404,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 397457265662188932, guid: baa8bae909d990e44aa962cafa35ea78, type: 3}
+      propertyPath: m_ColliderPaths.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 397457265662188932, guid: baa8bae909d990e44aa962cafa35ea78, type: 3}
+      propertyPath: m_CompositePaths.m_Paths.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 397457265662188932, guid: baa8bae909d990e44aa962cafa35ea78, type: 3}
+      propertyPath: m_ColliderPaths.Array.data[0].m_Collider
+      value: 
+      objectReference: {fileID: 784072038}
     - target: {fileID: 1057956945527203743, guid: baa8bae909d990e44aa962cafa35ea78, type: 3}
       propertyPath: m_LocalPosition.x
       value: 13.77
@@ -12444,6 +12456,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2743684442775512431, guid: baa8bae909d990e44aa962cafa35ea78, type: 3}
+      propertyPath: m_BodyType
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2743684442775512431, guid: baa8bae909d990e44aa962cafa35ea78, type: 3}
+      propertyPath: m_GravityScale
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3369904350779813825, guid: baa8bae909d990e44aa962cafa35ea78, type: 3}
       propertyPath: activeRacket
       value: 
@@ -12452,6 +12472,10 @@ PrefabInstance:
       propertyPath: playerMovement
       value: 
       objectReference: {fileID: 847136737}
+    - target: {fileID: 3369904350779813825, guid: baa8bae909d990e44aa962cafa35ea78, type: 3}
+      propertyPath: racketCollider
+      value: 
+      objectReference: {fileID: 784072037}
     - target: {fileID: 5100004595039311518, guid: baa8bae909d990e44aa962cafa35ea78, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.69
@@ -12522,7 +12546,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7516077896464606192, guid: baa8bae909d990e44aa962cafa35ea78, type: 3}
       propertyPath: m_Name
-      value: racket
+      value: Racket
+      objectReference: {fileID: 0}
+    - target: {fileID: 8611996755467943810, guid: baa8bae909d990e44aa962cafa35ea78, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
@@ -13498,6 +13526,16 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!4 &784072037 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2502259980198305700, guid: baa8bae909d990e44aa962cafa35ea78, type: 3}
+  m_PrefabInstance: {fileID: 588567529}
+  m_PrefabAsset: {fileID: 0}
+--- !u!60 &784072038 stripped
+PolygonCollider2D:
+  m_CorrespondingSourceObject: {fileID: 9041147126187591579, guid: baa8bae909d990e44aa962cafa35ea78, type: 3}
+  m_PrefabInstance: {fileID: 588567529}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &847136737 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5642381549501237832, guid: baa8bae909d990e44aa962cafa35ea78, type: 3}

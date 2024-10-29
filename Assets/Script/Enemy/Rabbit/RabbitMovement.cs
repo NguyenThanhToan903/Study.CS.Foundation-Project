@@ -25,8 +25,8 @@ public class RabbitMovement : MonoBehaviour
 
     private float timeSinceLastUpdate = 0f;
 
-    private float randomDirectionTimer = 0f; // Thời gian để tạo hướng ngẫu nhiên
-    private float randomDirectionInterval = 2f; // Thời gian giữa các lần tạo hướng ngẫu nhiên
+    //private float randomDirectionTimer = 0f; // Thời gian để tạo hướng ngẫu nhiên
+    //private float randomDirectionInterval = 2f; // Thời gian giữa các lần tạo hướng ngẫu nhiên
 
     private Vector2 directionToCenter; // Vector hướng vào tâm
 
@@ -242,7 +242,7 @@ public class RabbitMovement : MonoBehaviour
         Vector2 directionToCenter = ((Vector2)boundary.Center - (Vector2)transform.position).normalized;
 
         // Kết hợp vector tránh người chơi và vector hướng vào tâm
-        float avoidanceStrength = 0.5f; // Tùy chỉnh cường độ tránh
+        //float avoidanceStrength = 0.5f; // Tùy chỉnh cường độ tránh
         velocity = (directionToPlayer + directionToCenter).normalized;
 
         // Cập nhật tốc độ dựa trên hướng di chuyển
