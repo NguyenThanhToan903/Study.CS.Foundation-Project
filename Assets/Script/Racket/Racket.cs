@@ -40,8 +40,6 @@ public class Racket : MonoBehaviour
     {
         animator.SetTrigger("Catching");
         racketCollider.gameObject.SetActive(true);
-
-
     }
 
     private void DoneAttackEvent()
@@ -56,14 +54,7 @@ public class Racket : MonoBehaviour
         Vector3 playerScreenPoint = Camera.main.WorldToScreenPoint(playerMovement.transform.position);
 
         float angle = Mathf.Atan2(mousePos.y, mousePos.x) * Mathf.Rad2Deg;
-        //if (mousePos.x < playerScreenPoint.x)
-        //{
-        //    activeRacket.transform.rotation = Quaternion.Euler(0f, -180f, angle);
-        //}
-        //else
-        //{
-        //    activeRacket.transform.rotation = Quaternion.Euler(0f, 0f, angle);
-        //}
+
         if (move.x < 0) temp = -180f;
         else temp = 0f;
         activeRacket.transform.rotation = Quaternion.Euler(0f, temp, angle);

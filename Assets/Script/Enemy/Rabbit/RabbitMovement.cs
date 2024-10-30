@@ -127,7 +127,7 @@ public class RabbitMovement : MonoBehaviour
     private void CheckBoundary()
     {
         float distanceToCenter = Vector3.Distance(transform.position, boundary.Center);
-        Debug.Log("Distance to center: " + distanceToCenter);
+        //Debug.Log("Distance to center: " + distanceToCenter);
         timeSinceLastUpdate += Time.deltaTime;
         if (distanceToCenter >= boundary.Radius - 1f && timeSinceLastUpdate >= 2f)
         {
