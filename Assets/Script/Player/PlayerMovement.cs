@@ -78,8 +78,8 @@ public class PlayerMovement : MonoBehaviour
 
     //private void OnDrawGizmos()
     //{
-    //    Gizmos.color = Color.green; // Màu của gizmos cho người chơi
-    //    Gizmos.DrawWireSphere(transform.position, 5f); // Vẽ hình cầu xung quanh người chơi
+    //    Gizmos.color = Color.green; 
+    //    Gizmos.DrawWireSphere(transform.position, 5f);
 
     //}
 

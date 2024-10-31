@@ -165,77 +165,21 @@ public class RabbitMovement : MonoBehaviour
                 directionToPlayer = (Vector2)(transform.position - playerTransform.position).normalized;
                 Vector2 directionToCenter = ((Vector2)boundary.Center - (Vector2)transform.position).normalized;
 
-                //Vector2 playerDirection = (Vector2)(playerTransform.position - transform.position);
 
                 velocity = (directionToPlayer + (directionToCenter * 0.7f) + velocity * 1.3f).normalized;
             }
-            // Nếu người chơi tiến gần, thỏ sẽ lấy vector của người chơi trừ vector của thỏ
-            // Di chuyển thỏ theo vector hiện tại
+
             transform.position += (Vector3)(velocity * speed) * Time.deltaTime;
         }
     }
-
-
-    //private void CheckBoundary()
-    //{
-    //    Vector2 center = boundary.Center;
-    //    float halfBoundarySize = boundary.Size / 2f;
-
-    //    // Tính toán biên của hình vuông
-    //    float leftBoundary = center.x - halfBoundarySize;
-    //    float rightBoundary = center.x + halfBoundarySize;
-    //    float topBoundary = center.y + halfBoundarySize + 3f;
-    //    float bottomBoundary = center.y - halfBoundarySize - 3f;
-
-    //    Vector2 directionToCenter = (center - (Vector2)transform.position).normalized;
-
-    //    // Nếu thỏ gần với biên của hình vuông
-    //    if ((transform.position.x <= leftBoundary || transform.position.x >= rightBoundary ||
-    //        transform.position.y <= bottomBoundary || transform.position.y >= topBoundary) && timeSinceLastUpdate >= 2f)
-    //    {
-    //        // Random góc ±45 độ từ hướng vào tâm
-    //        float leftAngle = Mathf.Atan2(directionToCenter.y, directionToCenter.x) * Mathf.Rad2Deg - 45f;
-    //        float rightAngle = Mathf.Atan2(directionToCenter.y, directionToCenter.x) * Mathf.Rad2Deg + 45f;
-    //        float randomAngle = Random.Range(leftAngle, rightAngle);
-
-    //        // Tính toán vector ngẫu nhiên từ góc random
-    //        Vector2 randomDirection = new Vector2(Mathf.Cos(randomAngle * Mathf.Deg2Rad), Mathf.Sin(randomAngle * Mathf.Deg2Rad)).normalized;
-
-    //        // Cập nhật hướng di chuyển với tốc độ chậm
-    //        velocity = randomDirection;
-    //        transform.position += (Vector3)(velocity * slowSpeed) * Time.deltaTime;
-    //        timeSinceLastUpdate = 0f;
-    //    }
-    //    else
-    //    {
-    //        // Nếu gần người chơi, lấy vector né người chơi + hướng vào tâm
-    //        if (Vector2.Distance(transform.position, playerTransform.position) < detectionRadius)
-    //        {
-    //            Vector2 directionToPlayer = (Vector2)(transform.position - playerTransform.position).normalized;
-    //            velocity = (directionToPlayer + (directionToCenter * 0.7f)).normalized;
-    //        }
-
-    //        // Di chuyển thỏ theo tốc độ bình thường
-    //        transform.position += (Vector3)(velocity * speed) * Time.deltaTime;
-    //    }
-    //}
-
-
     private void SetRandomDirection()
     {
         float randomAngle = Random.Range(0f, 360f);
         velocity = new Vector2(Mathf.Cos(randomAngle * Mathf.Deg2Rad), Mathf.Sin(randomAngle * Mathf.Deg2Rad)).normalized;
     }
-
-    //private void AvoidPlayer()
-    //{
-    //    Vector2 directionToPlayer = (Vector2)(transform.position - playerTransform.position);
-    //    velocity = directionToPlayer.normalized;
-    //}
-
     private void AvoidPlayer()
     {
-        // Tính toán vector hướng từ thỏ đến người chơi
+
         Vector2 directionToPlayer = (Vector2)(transform.position - playerTransform.position).normalized;
 
         // Tính toán vector hướng vào tâm
