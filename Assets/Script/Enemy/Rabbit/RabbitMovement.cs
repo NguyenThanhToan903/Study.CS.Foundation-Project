@@ -6,13 +6,15 @@ public class RabbitMovement : MonoBehaviour
     private float speed = 5f;
 
     [SerializeField]
-    private float slowSpeed = 2f; // Tốc độ khi gần biên
+    private float slowSpeed = 2f;
 
+    [SerializeField]
     private Transform playerTransform;
-    Vector2 directionToPlayer = Vector2.zero;
+
     [SerializeField]
     private GameObject model;
 
+    [SerializeField]
     private Transform modelTransform;
 
     [SerializeField]
@@ -21,14 +23,17 @@ public class RabbitMovement : MonoBehaviour
     [SerializeField]
     private Vector2 velocity;
 
+    [SerializeField]
     private Boundary boundary;
 
+    [SerializeField]
     private float timeSinceLastUpdate = 0f;
 
-    //private float randomDirectionTimer = 0f; // Thời gian để tạo hướng ngẫu nhiên
-    //private float randomDirectionInterval = 2f; // Thời gian giữa các lần tạo hướng ngẫu nhiên
+    [SerializeField]
+    private Vector2 directionToCenter;
 
-    private Vector2 directionToCenter; // Vector hướng vào tâm
+
+    Vector2 directionToPlayer = Vector2.zero;
 
     private void Start()
     {
@@ -37,14 +42,21 @@ public class RabbitMovement : MonoBehaviour
         {
             Debug.LogError("Model object not found!");
         }
+
         SetRandomDirection();
+
         playerTransform = PlayerMovement.Instance.transform;
 
-        // Tính toán vector hướng vào tâm ngay từ đầu
         directionToCenter = (Vector2)(boundary.Center - transform.position).normalized;
     }
 
     private void Update()
+    {
+        Move();
+        SetSpriteScale();
+    }
+
+    public void SetSpriteScale()
     {
         if (velocity.x < 0)
         {
@@ -54,109 +66,47 @@ public class RabbitMovement : MonoBehaviour
         {
             modelTransform.localScale = new Vector3(1, 1, 1);
         }
-
-        Move();
     }
 
     public void SetBoundary(Boundary boundary)
     {
         this.boundary = boundary;
-        // Cập nhật vector hướng vào tâm mỗi khi thiết lập biên
         directionToCenter = (Vector2)(boundary.Center - transform.position).normalized;
     }
 
-    //private void Move()
-    //{
-    //    if (Vector2.Distance(transform.position, playerTransform.position) < detectionRadius)
-    //    {
-    //        AvoidPlayer();
-    //    }
-    //    CheckBoundary();
-    //}
-
-    //private void CheckBoundary()
-    //{
-    //    float distanceToCenter = Vector3.Distance(transform.position, boundary.Center);
-    //    Debug.Log("Distance to center: " + distanceToCenter);
-
-    //    if (distanceToCenter >= boundary.Radius - 1f)
-    //    {
-    //        Vector2 directionToCenter = (boundary.Center - transform.position).normalized;
-
-    //        float leftAngle = Mathf.Atan2(directionToCenter.y, directionToCenter.x) * Mathf.Rad2Deg - 45f;
-    //        float rightAngle = Mathf.Atan2(directionToCenter.y, directionToCenter.x) * Mathf.Rad2Deg + 45f;
-
-    //        float randomAngle = Random.Range(leftAngle, rightAngle);
-
-    //        Vector2 randomDirection = new Vector2(Mathf.Cos(randomAngle * Mathf.Deg2Rad), Mathf.Sin(randomAngle * Mathf.Deg2Rad)).normalized;
-
-    //        velocity = randomDirection;
-
-    //        transform.position += (Vector3)(velocity * slowSpeed) * Time.deltaTime;
-    //    }
-    //    else
-    //    {
-
-    //        transform.position += (Vector3)(velocity * speed) * Time.deltaTime;
-    //    }
-    //}
-
-    //private void Move()
-    //{
-    //    if (Vector2.Distance(transform.position, playerTransform.position) < detectionRadius)
-    //    {
-    //        AvoidPlayer();
-    //    }
-    //    CheckBoundary();
-    //}
-
     private void Move()
     {
-        //if (Vector2.Distance(transform.position, playerTransform.position) < detectionRadius)
-        //{
-        //    AvoidPlayer(); // Chỉ tránh người chơi nếu trong phạm vi phát hiện
-        //}
-        //else
-        //{
-        //    // Di chuyển theo hướng hiện tại
-        //    transform.position += (Vector3)(velocity * speed) * Time.deltaTime;
-        //}
-        CheckBoundary(); // Kiểm tra biên trước khi tránh người chơi
+        CheckBoundary();
     }
 
     private void CheckBoundary()
     {
         float distanceToCenter = Vector3.Distance(transform.position, boundary.Center);
-        //Debug.Log("Distance to center: " + distanceToCenter);
-        timeSinceLastUpdate += Time.deltaTime;
-        if (distanceToCenter >= boundary.Radius - 1f && timeSinceLastUpdate >= 2f)
+
+
+        if (distanceToCenter >= boundary.Radius - 2f)
         {
-            // Tính toán vector hướng vào tâm
-            Vector2 directionToCenter = (boundary.Center - transform.position).normalized;
+            timeSinceLastUpdate += Time.fixedDeltaTime;
+            if (timeSinceLastUpdate >= 2f)
+            {
+                directionToCenter = (boundary.Center - transform.position).normalized;
 
-            // Mở rộng sang 2 bên 45 độ
-            float leftAngle = Mathf.Atan2(directionToCenter.y, directionToCenter.x) * Mathf.Rad2Deg - 45f;
-            float rightAngle = Mathf.Atan2(directionToCenter.y, directionToCenter.x) * Mathf.Rad2Deg + 45f;
+                float leftAngle = Mathf.Atan2(directionToCenter.y, directionToCenter.x) * Mathf.Rad2Deg - 45f;
+                float rightAngle = Mathf.Atan2(directionToCenter.y, directionToCenter.x) * Mathf.Rad2Deg + 45f;
+                float randomAngle = Random.Range(leftAngle, rightAngle);
 
-            // Tạo góc ngẫu nhiên trong khoảng 45 độ sang trái và phải
-            float randomAngle = Random.Range(leftAngle, rightAngle);
-
-            // Tính toán vector ngẫu nhiên dựa trên góc
-            Vector2 randomDirection = new Vector2(Mathf.Cos(randomAngle * Mathf.Deg2Rad), Mathf.Sin(randomAngle * Mathf.Deg2Rad)).normalized;
-
-            // Cộng vector ngẫu nhiên với vector hướng vào tâm
-            velocity = randomDirection;
-
-            // Giảm tốc độ khi ở gần biên
-            transform.position += (Vector3)(velocity * slowSpeed) * Time.deltaTime;
-            timeSinceLastUpdate = 0f;
+                Vector2 randomDirection = new Vector2(Mathf.Cos(randomAngle * Mathf.Deg2Rad), Mathf.Sin(randomAngle * Mathf.Deg2Rad)).normalized;
+                velocity = randomDirection;
+                timeSinceLastUpdate = 0f;
+            }
 
             if (Vector2.Distance(transform.position, playerTransform.position) < detectionRadius)
             {
                 directionToPlayer = (Vector2)(transform.position - playerTransform.position).normalized;
-                //Vector2 playerDirection = (Vector2)(playerTransform.position - transform.position);
-                velocity = (directionToPlayer + (directionToCenter * 0.7f) + velocity * 1.3f).normalized;
+                velocity = (directionToPlayer + (directionToCenter * 1f) + velocity * 1.3f).normalized;
             }
+
+            transform.position += (Vector3)(velocity * slowSpeed) * Time.deltaTime;
         }
         else
         {
@@ -165,8 +115,7 @@ public class RabbitMovement : MonoBehaviour
                 directionToPlayer = (Vector2)(transform.position - playerTransform.position).normalized;
                 Vector2 directionToCenter = ((Vector2)boundary.Center - (Vector2)transform.position).normalized;
 
-
-                velocity = (directionToPlayer + (directionToCenter * 0.7f) + velocity * 1.3f).normalized;
+                velocity = (directionToPlayer + (directionToCenter * 1f) + velocity * 1.3f).normalized;
             }
 
             transform.position += (Vector3)(velocity * speed) * Time.deltaTime;
@@ -179,62 +128,30 @@ public class RabbitMovement : MonoBehaviour
     }
     private void AvoidPlayer()
     {
-
         Vector2 directionToPlayer = (Vector2)(transform.position - playerTransform.position).normalized;
 
-        // Tính toán vector hướng vào tâm
         Vector2 directionToCenter = ((Vector2)boundary.Center - (Vector2)transform.position).normalized;
 
-        // Kết hợp vector tránh người chơi và vector hướng vào tâm
-        //float avoidanceStrength = 0.5f; // Tùy chỉnh cường độ tránh
         velocity = (directionToPlayer + directionToCenter).normalized;
 
-        // Cập nhật tốc độ dựa trên hướng di chuyển
         transform.position += (Vector3)(velocity * speed) * Time.deltaTime;
     }
 
-
-    //private void OnDrawGizmos()
-    //{
-    //    Gizmos.color = Color.blue;
-    //    Gizmos.DrawLine(transform.position, transform.position + (Vector3)velocity);
-
-    //    // Vẽ vector hướng vào tâm
-    //    if (boundary != null)
-    //    {
-    //        Gizmos.color = Color.magenta; // Màu sắc cho vector hướng vào tâm
-    //        Gizmos.DrawLine(transform.position, boundary.Center);
-    //    }
-
-    //    if (Vector2.Distance(transform.position, playerTransform.position) < detectionRadius)
-    //    {
-    //        Gizmos.color = Color.green;
-    //        Gizmos.DrawLine(transform.position, playerTransform.position);
-    //    }
-
-    //    Gizmos.color = Color.red;
-    //    Gizmos.DrawWireSphere(transform.position, detectionRadius);
-    //}
-
     private void OnDrawGizmos()
     {
-        // Vẽ vector hướng hiện tại
         Gizmos.color = Color.blue;
         Gizmos.DrawLine(transform.position, transform.position + (Vector3)velocity);
 
-        // Vẽ boundary hình vuông
         if (boundary != null)
         {
             Vector2 center = boundary.Center;
             float halfBoundarySize = boundary.Size / 2f;
 
-            // Các đỉnh của hình vuông
             Vector2 topLeft = new Vector2(center.x - halfBoundarySize, center.y + halfBoundarySize);
             Vector2 topRight = new Vector2(center.x + halfBoundarySize, center.y + halfBoundarySize);
             Vector2 bottomLeft = new Vector2(center.x - halfBoundarySize, center.y - halfBoundarySize);
             Vector2 bottomRight = new Vector2(center.x + halfBoundarySize, center.y - halfBoundarySize);
 
-            // Vẽ các cạnh của hình vuông
             Gizmos.color = Color.cyan;
             Gizmos.DrawLine(topLeft, topRight);
             Gizmos.DrawLine(topRight, bottomRight);
@@ -242,13 +159,11 @@ public class RabbitMovement : MonoBehaviour
             Gizmos.DrawLine(bottomLeft, topLeft);
         }
 
-        // Vẽ vector hướng vào tâm
         if (boundary != null)
         {
             Gizmos.color = Color.magenta;
             Gizmos.DrawLine(transform.position, boundary.Center);
 
-            // Vẽ vector mở rộng
             float leftAngle = Mathf.Atan2((boundary.Center - transform.position).y, (boundary.Center - transform.position).x) * Mathf.Rad2Deg - 45f;
             float rightAngle = Mathf.Atan2((boundary.Center - transform.position).y, (boundary.Center - transform.position).x) * Mathf.Rad2Deg + 45f;
 
@@ -260,7 +175,6 @@ public class RabbitMovement : MonoBehaviour
             Gizmos.DrawLine(transform.position, transform.position + (Vector3)rightDirection * 2f);
         }
 
-        // Vẽ vector hướng về người chơi
         if (Vector2.Distance(transform.position, playerTransform.position) < detectionRadius)
         {
             Gizmos.color = Color.green;
@@ -270,8 +184,5 @@ public class RabbitMovement : MonoBehaviour
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, detectionRadius);
     }
-
-
-
 
 }
