@@ -28,6 +28,34 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "Navigate",
+            "id": "2f956220-848c-4f58-abde-d7532c01df3e",
+            "actions": [
+                {
+                    "name": "Esc",
+                    "type": "Button",
+                    "id": "46ce0ef5-dd57-4d3d-81ec-5a803b570f9a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "526e70cb-1df1-48c9-a0f7-8db5aa86e46f",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Esc",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []

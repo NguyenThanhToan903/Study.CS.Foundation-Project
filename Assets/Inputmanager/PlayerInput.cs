@@ -50,6 +50,34 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Navigate"",
+            ""id"": ""2f956220-848c-4f58-abde-d7532c01df3e"",
+            ""actions"": [
+                {
+                    ""name"": ""Esc"",
+                    ""type"": ""Button"",
+                    ""id"": ""46ce0ef5-dd57-4d3d-81ec-5a803b570f9a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""526e70cb-1df1-48c9-a0f7-8db5aa86e46f"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Esc"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -57,6 +85,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         // Combat
         m_Combat = asset.FindActionMap("Combat", throwIfNotFound: true);
         m_Combat_Catch = m_Combat.FindAction("Catch", throwIfNotFound: true);
+        // Navigate
+        m_Navigate = asset.FindActionMap("Navigate", throwIfNotFound: true);
+        m_Navigate_Esc = m_Navigate.FindAction("Esc", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -160,8 +191,58 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         }
     }
     public CombatActions @Combat => new CombatActions(this);
+
+    // Navigate
+    private readonly InputActionMap m_Navigate;
+    private List<INavigateActions> m_NavigateActionsCallbackInterfaces = new List<INavigateActions>();
+    private readonly InputAction m_Navigate_Esc;
+    public struct NavigateActions
+    {
+        private @PlayerInput m_Wrapper;
+        public NavigateActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Esc => m_Wrapper.m_Navigate_Esc;
+        public InputActionMap Get() { return m_Wrapper.m_Navigate; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(NavigateActions set) { return set.Get(); }
+        public void AddCallbacks(INavigateActions instance)
+        {
+            if (instance == null || m_Wrapper.m_NavigateActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_NavigateActionsCallbackInterfaces.Add(instance);
+            @Esc.started += instance.OnEsc;
+            @Esc.performed += instance.OnEsc;
+            @Esc.canceled += instance.OnEsc;
+        }
+
+        private void UnregisterCallbacks(INavigateActions instance)
+        {
+            @Esc.started -= instance.OnEsc;
+            @Esc.performed -= instance.OnEsc;
+            @Esc.canceled -= instance.OnEsc;
+        }
+
+        public void RemoveCallbacks(INavigateActions instance)
+        {
+            if (m_Wrapper.m_NavigateActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(INavigateActions instance)
+        {
+            foreach (var item in m_Wrapper.m_NavigateActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_NavigateActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public NavigateActions @Navigate => new NavigateActions(this);
     public interface ICombatActions
     {
         void OnCatch(InputAction.CallbackContext context);
+    }
+    public interface INavigateActions
+    {
+        void OnEsc(InputAction.CallbackContext context);
     }
 }
