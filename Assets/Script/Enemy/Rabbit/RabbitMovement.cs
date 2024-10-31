@@ -103,7 +103,7 @@ public class RabbitMovement : MonoBehaviour
             if (Vector2.Distance(transform.position, playerTransform.position) < detectionRadius)
             {
                 directionToPlayer = (Vector2)(transform.position - playerTransform.position).normalized;
-                velocity = (directionToPlayer + (directionToCenter * 1f) + velocity * 1.3f).normalized;
+                velocity = (directionToPlayer + (directionToCenter * 0.7f) + velocity * 1.3f).normalized;
             }
 
             transform.position += (Vector3)(velocity * slowSpeed) * Time.deltaTime;
@@ -115,7 +115,7 @@ public class RabbitMovement : MonoBehaviour
                 directionToPlayer = (Vector2)(transform.position - playerTransform.position).normalized;
                 Vector2 directionToCenter = ((Vector2)boundary.Center - (Vector2)transform.position).normalized;
 
-                velocity = (directionToPlayer + (directionToCenter * 1f) + velocity * 1.3f).normalized;
+                velocity = (directionToPlayer + (directionToCenter * 0.7f) + velocity * 1.3f).normalized;
             }
 
             transform.position += (Vector3)(velocity * speed) * Time.deltaTime;
