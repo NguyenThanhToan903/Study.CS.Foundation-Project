@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class Menu : MonoBehaviour
@@ -14,6 +14,17 @@ public class Menu : MonoBehaviour
     private void Awake()
     {
         playerInput = new PlayerInput();
+
+        if (SceneManager.GetActiveScene().buildIndex == 0)
+        {
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+        }
+        else
+        {
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+        }
     }
 
     private void OnEnable()
@@ -23,26 +34,34 @@ public class Menu : MonoBehaviour
 
     private void Start()
     {
-        playerInput.Navigate.Esc.started += _ => PauseGame();
+        playerInput.Navigate.Esc.started += _ => TogglePauseGame();
     }
 
     public void PlayGame()
     {
         Time.timeScale = 1f;
         SceneManager.LoadScene(1);
+
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     public void BackToMenu()
     {
         SceneManager.LoadScene(0);
+
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
     }
 
-    public void PauseGame()
+    public void TogglePauseGame()
     {
         if (!isPaused)
         {
             Time.timeScale = 0f;
             pauseMenuGame.SetActive(true);
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
             isPaused = true;
         }
         else
@@ -55,6 +74,8 @@ public class Menu : MonoBehaviour
     {
         Time.timeScale = 1f;
         pauseMenuGame.SetActive(false);
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
         isPaused = false;
     }
 
