@@ -14,8 +14,6 @@ public class PlayerMovement : MonoBehaviour
     private float x, y;
 
     private void Awake()
-
-
     {
         PlayerMovement.instance = this;
         if (model != null)
@@ -67,20 +65,4 @@ public class PlayerMovement : MonoBehaviour
         }
         animator.SetBool("Moving", moving);
     }
-
-    //private void OnCollisionEnter2D(Collision2D collision)
-    //{
-    //    if (collision.gameObject.CompareTag("Rabbit"))
-    //    {
-    //        Physics2D.IgnoreCollision(rb.GetComponent<Collider2D>(), collision.collider);
-    //    }
-    //}
-
-    //private void OnDrawGizmos()
-    //{
-    //    Gizmos.color = Color.green; 
-    //    Gizmos.DrawWireSphere(transform.position, 5f);
-
-    //}
-
 }

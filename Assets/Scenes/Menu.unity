@@ -451,6 +451,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ea4028dc5c137b42b5c2904f711e1e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pauseMenuGame: {fileID: 1609371904011432600, guid: f4fe0be29de4a5949b8d9fdfc4da1cad, type: 3}
 --- !u!114 &778410920
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1131,7 +1132,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1868538702}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 778410919}
+        m_TargetAssemblyTypeName: Menu, Assembly-CSharp
+        m_MethodName: ExitGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1868538702
 MonoBehaviour:
   m_ObjectHideFlags: 0

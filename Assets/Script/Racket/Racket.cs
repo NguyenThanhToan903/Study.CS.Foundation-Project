@@ -7,6 +7,7 @@ public class Racket : MonoBehaviour
     [SerializeField] private ActiveRacket activeRacket;
     [SerializeField] private Vector3 move;
     [SerializeField] private Transform racketCollider;
+    [SerializeField] private GameObject pauseGameMenu;
     private Animator animator;
 
     private void Awake()
@@ -49,17 +50,18 @@ public class Racket : MonoBehaviour
 
     private void MouseFollowWithOffset()
     {
-        Vector3 mousePos = Input.mousePosition;
-        float temp = 0f;
-        Vector3 playerScreenPoint = Camera.main.WorldToScreenPoint(playerMovement.transform.position);
+        if (Time.timeScale == 1f)
+        {
+            Vector3 mousePos = Input.mousePosition;
+            float temp = 0f;
+            Vector3 playerScreenPoint = Camera.main.WorldToScreenPoint(playerMovement.transform.position);
 
-        float angle = Mathf.Atan2(mousePos.y, mousePos.x) * Mathf.Rad2Deg;
+            float angle = Mathf.Atan2(mousePos.y, mousePos.x) * Mathf.Rad2Deg;
 
-        if (move.x < 0) temp = -180f;
-        else temp = 0f;
-        activeRacket.transform.rotation = Quaternion.Euler(0f, temp, angle);
-        racketCollider.transform.rotation = Quaternion.Euler(0f, temp, angle);
-
+            if (move.x < 0) temp = -180f;
+            else temp = 0f;
+            activeRacket.transform.rotation = Quaternion.Euler(0f, temp, angle);
+            racketCollider.transform.rotation = Quaternion.Euler(0f, temp, angle);
+        }
     }
-
 }
