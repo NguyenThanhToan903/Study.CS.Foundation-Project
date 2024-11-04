@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61c3fe872dce4e74b9cc304d604923e8, type: 3}
   m_Name: Boundery
   m_EditorClassIdentifier: 
-  radius: 9
-  size: 20
+  PointA: {x: -30, y: -18}
+  PointB: {x: 30, y: 18}
+  Center: {x: 0, y: 0}

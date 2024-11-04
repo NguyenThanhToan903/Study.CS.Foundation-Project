@@ -114,7 +114,7 @@ MonoBehaviour:
   playerTransform: {fileID: 0}
   model: {fileID: 1883121320689261907}
   modelTransform: {fileID: 0}
-  detectionRadius: 2
+  detectionRadius: 5
   velocity: {x: 0, y: 0}
   boundary: {fileID: 0}
   timeSinceLastUpdate: 0

@@ -19,11 +19,12 @@ public class RabbitSpawnManager : MonoBehaviour
         if (rabbits.rabbitMovement.Count > 0) rabbits.rabbitMovement.Clear();
 
         boundary.Center = transform.position;
-
+        Vector2 randomPoint;
         for (int i = 0; i < rabbitCount; i++)
         {
-            float randomPointX = Random.Range(boundary.Left, boundary.Right);
-            Vector3 spawnPosition = (Vector3)randomPoint + boundary.Center;
+            randomPoint.x = Random.Range(boundary.PointA.x, boundary.PointB.x);
+            randomPoint.y = Random.Range(boundary.PointA.y, boundary.PointB.y);
+            Vector3 spawnPosition = (Vector3)randomPoint + (Vector3)boundary.Center;
             GameObject rabbit = Instantiate(rabbitPrefab, spawnPosition, Quaternion.identity);
             rabbit.transform.SetParent(transform);
             rabbits.rabbitMovement.Add(rabbit.GetComponent<RabbitMovement>());
@@ -40,6 +41,13 @@ public class RabbitSpawnManager : MonoBehaviour
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(boundary.Center, boundary.Radius); // Vẽ tại vị trí tâm
+
+
+        Vector3 center = (boundary.PointA + boundary.PointB) / 2;
+        Vector3 size = new Vector3(Mathf.Abs(boundary.PointA.x - boundary.PointB.x), Mathf.Abs(boundary.PointA.y - boundary.PointB.y), 0);
+
+
+        Gizmos.DrawWireCube(center, size);
     }
+
 }

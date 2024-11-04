@@ -3,13 +3,14 @@
 [CreateAssetMenu(menuName = "ScriptableObject/Boundary")]
 public class Boundary : ScriptableObject
 {
-    [SerializeField] private Vector2 pointA;
-    [SerializeField] private Vector2 pointB;
+    [SerializeField] public Vector2 PointA;
+    [SerializeField] public Vector2 PointB;
+    [SerializeField] public Vector2 Center;
 
-    public static Boundary instance;
+    [SerializeField] public float Radius { private set; get; }
 
-    public void Awake()
+    private void Awake()
     {
-        instance = this;
+        Radius = Mathf.Min(Mathf.Abs(PointA.x - PointB.x), Mathf.Abs(PointA.y - PointB.y));
     }
 }

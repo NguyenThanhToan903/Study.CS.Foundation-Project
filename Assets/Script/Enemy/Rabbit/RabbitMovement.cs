@@ -47,7 +47,7 @@ public class RabbitMovement : MonoBehaviour
 
         playerTransform = PlayerMovement.Instance.transform;
 
-        directionToCenter = (Vector2)(boundary.Center - transform.position).normalized;
+        directionToCenter = (Vector2)(boundary.Center - (Vector2)transform.position).normalized;
     }
 
     private void Update()
@@ -71,7 +71,7 @@ public class RabbitMovement : MonoBehaviour
     public void SetBoundary(Boundary boundary)
     {
         this.boundary = boundary;
-        directionToCenter = (Vector2)(boundary.Center - transform.position).normalized;
+        directionToCenter = (Vector2)(boundary.Center - (Vector2)transform.position).normalized;
     }
 
     private void Move()
@@ -89,7 +89,7 @@ public class RabbitMovement : MonoBehaviour
             timeSinceLastUpdate += Time.fixedDeltaTime;
             if (timeSinceLastUpdate >= 2f)
             {
-                directionToCenter = (boundary.Center - transform.position).normalized;
+                directionToCenter = (boundary.Center - (Vector2)transform.position).normalized;
 
                 float leftAngle = Mathf.Atan2(directionToCenter.y, directionToCenter.x) * Mathf.Rad2Deg - 45f;
                 float rightAngle = Mathf.Atan2(directionToCenter.y, directionToCenter.x) * Mathf.Rad2Deg + 45f;
@@ -145,12 +145,12 @@ public class RabbitMovement : MonoBehaviour
         if (boundary != null)
         {
             Vector2 center = boundary.Center;
-            float halfBoundarySize = boundary.Size / 2f;
+            float halfBoundarySize = boundary.Radius;
 
-            Vector2 topLeft = new Vector2(center.x - halfBoundarySize, center.y + halfBoundarySize);
-            Vector2 topRight = new Vector2(center.x + halfBoundarySize, center.y + halfBoundarySize);
-            Vector2 bottomLeft = new Vector2(center.x - halfBoundarySize, center.y - halfBoundarySize);
-            Vector2 bottomRight = new Vector2(center.x + halfBoundarySize, center.y - halfBoundarySize);
+            Vector2 topLeft = new(center.x - halfBoundarySize, center.y + halfBoundarySize);
+            Vector2 topRight = new(center.x + halfBoundarySize, center.y + halfBoundarySize);
+            Vector2 bottomLeft = new(center.x - halfBoundarySize, center.y - halfBoundarySize);
+            Vector2 bottomRight = new(center.x + halfBoundarySize, center.y - halfBoundarySize);
 
             Gizmos.color = Color.cyan;
             Gizmos.DrawLine(topLeft, topRight);
@@ -164,8 +164,8 @@ public class RabbitMovement : MonoBehaviour
             Gizmos.color = Color.magenta;
             Gizmos.DrawLine(transform.position, boundary.Center);
 
-            float leftAngle = Mathf.Atan2((boundary.Center - transform.position).y, (boundary.Center - transform.position).x) * Mathf.Rad2Deg - 45f;
-            float rightAngle = Mathf.Atan2((boundary.Center - transform.position).y, (boundary.Center - transform.position).x) * Mathf.Rad2Deg + 45f;
+            float leftAngle = Mathf.Atan2((boundary.Center - (Vector2)transform.position).y, (boundary.Center - (Vector2)transform.position).x) * Mathf.Rad2Deg - 45f;
+            float rightAngle = Mathf.Atan2((boundary.Center - (Vector2)transform.position).y, (boundary.Center - (Vector2)transform.position).x) * Mathf.Rad2Deg + 45f;
 
             Vector2 leftDirection = new Vector2(Mathf.Cos(leftAngle * Mathf.Deg2Rad), Mathf.Sin(leftAngle * Mathf.Deg2Rad));
             Vector2 rightDirection = new Vector2(Mathf.Cos(rightAngle * Mathf.Deg2Rad), Mathf.Sin(rightAngle * Mathf.Deg2Rad));
