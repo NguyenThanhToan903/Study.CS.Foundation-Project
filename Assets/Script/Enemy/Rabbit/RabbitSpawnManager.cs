@@ -18,13 +18,12 @@ public class RabbitSpawnManager : MonoBehaviour
     {
         if (rabbits.rabbitMovement.Count > 0) rabbits.rabbitMovement.Clear();
 
-
         boundary.Center = transform.position;
 
         for (int i = 0; i < rabbitCount; i++)
         {
-            Vector2 randomPoint = Random.insideUnitCircle * boundary.Radius;
-            Vector3 spawnPosition = new Vector3(randomPoint.x, randomPoint.y, 0) + boundary.Center;
+            float randomPointX = Random.Range(boundary.Left, boundary.Right);
+            Vector3 spawnPosition = (Vector3)randomPoint + boundary.Center;
             GameObject rabbit = Instantiate(rabbitPrefab, spawnPosition, Quaternion.identity);
             rabbit.transform.SetParent(transform);
             rabbits.rabbitMovement.Add(rabbit.GetComponent<RabbitMovement>());

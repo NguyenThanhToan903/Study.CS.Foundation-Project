@@ -3,13 +3,13 @@
 [CreateAssetMenu(menuName = "ScriptableObject/Boundary")]
 public class Boundary : ScriptableObject
 {
-    [SerializeField] private float radius = 10f;
+    [SerializeField] private Vector2 pointA;
+    [SerializeField] private Vector2 pointB;
 
-    public float Radius => radius;
+    public static Boundary instance;
 
-    [SerializeField] private float size = 5f;
-
-    public float Size => size;
-
-    public Vector3 Center { get; set; }
+    public void Awake()
+    {
+        instance = this;
+    }
 }

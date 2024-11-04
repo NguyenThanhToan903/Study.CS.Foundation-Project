@@ -111,9 +111,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 2
   slowSpeed: 1
+  playerTransform: {fileID: 0}
   model: {fileID: 1883121320689261907}
-  detectionRadius: 4
+  modelTransform: {fileID: 0}
+  detectionRadius: 2
   velocity: {x: 0, y: 0}
+  boundary: {fileID: 0}
+  timeSinceLastUpdate: 0
+  directionToCenter: {x: 0, y: 0}
 --- !u!1 &1883121320689261907
 GameObject:
   m_ObjectHideFlags: 0
