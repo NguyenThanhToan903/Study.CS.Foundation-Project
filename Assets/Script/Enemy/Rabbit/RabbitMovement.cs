@@ -131,7 +131,6 @@ public class RabbitMovement : MonoBehaviour
             timeSinceLastUpdate += Time.fixedDeltaTime;
             if (timeSinceLastUpdate >= 2f)
             {
-                // Thay đổi hướng ngẫu nhiên
                 SetRandomDirection();
                 timeSinceLastUpdate = 0f;
             }
