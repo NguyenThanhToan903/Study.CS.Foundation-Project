@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 3225538735493491365}
   - component: {fileID: 7077959273255139221}
   - component: {fileID: 1353400127104348694}
-  - component: {fileID: 9016305248538596199}
+  - component: {fileID: 6273280168957445827}
+  - component: {fileID: 6975681895636677181}
   m_Layer: 10
   m_Name: rabbit
   m_TagString: Rabbit
@@ -82,7 +83,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1000
+  m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 0
@@ -95,9 +96,9 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
---- !u!114 &9016305248538596199
+--- !u!114 &6273280168957445827
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -106,19 +107,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 778282378860521684}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: be4d5d94f9053be47975c821fb4c07f0, type: 3}
+  m_Script: {fileID: 11500000, guid: 6d0ee4bb33c8d85498d4d6028b437034, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 2
-  slowSpeed: 1
-  playerTransform: {fileID: 0}
-  model: {fileID: 1883121320689261907}
-  modelTransform: {fileID: 0}
-  detectionRadius: 2
-  velocity: {x: 0, y: 0}
-  boundary: {fileID: 0}
-  timeSinceLastUpdate: 0
-  directionToCenter: {x: 0, y: 0}
+--- !u!114 &6975681895636677181
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 778282378860521684}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2daa44c18db716949baa43a7a6b46aa2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 2
 --- !u!1 &1883121320689261907
 GameObject:
   m_ObjectHideFlags: 0
