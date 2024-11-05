@@ -78,11 +78,11 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 778282378860521684}
-  m_BodyType: 1
+  m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 1000
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 0
@@ -114,7 +114,7 @@ MonoBehaviour:
   playerTransform: {fileID: 0}
   model: {fileID: 1883121320689261907}
   modelTransform: {fileID: 0}
-  detectionRadius: 5
+  detectionRadius: 2
   velocity: {x: 0, y: 0}
   boundary: {fileID: 0}
   timeSinceLastUpdate: 0

@@ -44,7 +44,7 @@ public class RabbitMovement : MonoBehaviour
         }
 
         SetRandomDirection();
-
+        boundary.Radius = Mathf.Min(Mathf.Min(Mathf.Abs(boundary.PointA.x), Mathf.Abs(boundary.PointA.y)), Mathf.Min(Mathf.Abs(boundary.PointB.x), Mathf.Abs(boundary.PointB.y)));
         playerTransform = PlayerMovement.Instance.transform;
 
         directionToCenter = (Vector2)(boundary.Center - (Vector2)transform.position).normalized;
@@ -79,31 +79,67 @@ public class RabbitMovement : MonoBehaviour
         CheckBoundary();
     }
 
+    //private void CheckBoundary()
+    //{
+    //    float distanceToCenter = Vector3.Distance(transform.position, boundary.Center);
+
+    //    Debug.Log("Boundary Radius: " + boundary.Radius);
+    //    if (distanceToCenter >= boundary.Radius - 2f)
+    //    {
+    //        timeSinceLastUpdate += Time.fixedDeltaTime;
+    //        if (timeSinceLastUpdate >= 2f)
+    //        {
+    //            directionToCenter = (boundary.Center - (Vector2)transform.position).normalized;
+
+    //            float leftAngle = Mathf.Atan2(directionToCenter.y, directionToCenter.x) * Mathf.Rad2Deg - 45f;
+    //            float rightAngle = Mathf.Atan2(directionToCenter.y, directionToCenter.x) * Mathf.Rad2Deg + 45f;
+    //            float randomAngle = Random.Range(leftAngle, rightAngle);
+
+    //            Vector2 randomDirection = new Vector2(Mathf.Cos(randomAngle * Mathf.Deg2Rad), Mathf.Sin(randomAngle * Mathf.Deg2Rad)).normalized;
+    //            velocity = randomDirection;
+    //            timeSinceLastUpdate = 0f;
+    //        }
+
+    //        if (Vector2.Distance(transform.position, playerTransform.position) < detectionRadius)
+    //        {
+    //            directionToPlayer = (Vector2)(transform.position - playerTransform.position).normalized;
+    //            velocity = (directionToPlayer + (directionToCenter * 0.7f) + velocity * 1.3f).normalized;
+    //        }
+
+    //        transform.position += (Vector3)(velocity * slowSpeed) * Time.deltaTime;
+    //    }
+    //    else
+    //    {
+    //        if (Vector2.Distance(transform.position, playerTransform.position) < detectionRadius)
+    //        {
+    //            directionToPlayer = (Vector2)(transform.position - playerTransform.position).normalized;
+    //            Vector2 directionToCenter = ((Vector2)boundary.Center - (Vector2)transform.position).normalized;
+
+    //            velocity = (directionToPlayer + (directionToCenter * 0.7f) + velocity * 1.3f).normalized;
+    //        }
+
+    //        transform.position += (Vector3)(velocity * speed) * Time.deltaTime;
+    //    }
+    //}
+
     private void CheckBoundary()
     {
         float distanceToCenter = Vector3.Distance(transform.position, boundary.Center);
-
 
         if (distanceToCenter >= boundary.Radius - 2f)
         {
             timeSinceLastUpdate += Time.fixedDeltaTime;
             if (timeSinceLastUpdate >= 2f)
             {
-                directionToCenter = (boundary.Center - (Vector2)transform.position).normalized;
-
-                float leftAngle = Mathf.Atan2(directionToCenter.y, directionToCenter.x) * Mathf.Rad2Deg - 45f;
-                float rightAngle = Mathf.Atan2(directionToCenter.y, directionToCenter.x) * Mathf.Rad2Deg + 45f;
-                float randomAngle = Random.Range(leftAngle, rightAngle);
-
-                Vector2 randomDirection = new Vector2(Mathf.Cos(randomAngle * Mathf.Deg2Rad), Mathf.Sin(randomAngle * Mathf.Deg2Rad)).normalized;
-                velocity = randomDirection;
+                // Thay đổi hướng ngẫu nhiên
+                SetRandomDirection();
                 timeSinceLastUpdate = 0f;
             }
 
             if (Vector2.Distance(transform.position, playerTransform.position) < detectionRadius)
             {
                 directionToPlayer = (Vector2)(transform.position - playerTransform.position).normalized;
-                velocity = (directionToPlayer + (directionToCenter * 0.7f) + velocity * 1.3f).normalized;
+                velocity = (directionToPlayer + velocity * 1.3f).normalized;
             }
 
             transform.position += (Vector3)(velocity * slowSpeed) * Time.deltaTime;
@@ -113,14 +149,13 @@ public class RabbitMovement : MonoBehaviour
             if (Vector2.Distance(transform.position, playerTransform.position) < detectionRadius)
             {
                 directionToPlayer = (Vector2)(transform.position - playerTransform.position).normalized;
-                Vector2 directionToCenter = ((Vector2)boundary.Center - (Vector2)transform.position).normalized;
-
-                velocity = (directionToPlayer + (directionToCenter * 0.7f) + velocity * 1.3f).normalized;
+                velocity = (directionToPlayer + velocity * 1.3f).normalized;
             }
 
             transform.position += (Vector3)(velocity * speed) * Time.deltaTime;
         }
     }
+
     private void SetRandomDirection()
     {
         float randomAngle = Random.Range(0f, 360f);
@@ -144,13 +179,10 @@ public class RabbitMovement : MonoBehaviour
 
         if (boundary != null)
         {
-            Vector2 center = boundary.Center;
-            float halfBoundarySize = boundary.Radius;
-
-            Vector2 topLeft = new(center.x - halfBoundarySize, center.y + halfBoundarySize);
-            Vector2 topRight = new(center.x + halfBoundarySize, center.y + halfBoundarySize);
-            Vector2 bottomLeft = new(center.x - halfBoundarySize, center.y - halfBoundarySize);
-            Vector2 bottomRight = new(center.x + halfBoundarySize, center.y - halfBoundarySize);
+            Vector2 topLeft = new(boundary.PointA.x, boundary.PointB.y);
+            Vector2 topRight = boundary.PointB;
+            Vector2 bottomLeft = boundary.PointA;
+            Vector2 bottomRight = new(boundary.PointB.x, boundary.PointA.y);
 
             Gizmos.color = Color.cyan;
             Gizmos.DrawLine(topLeft, topRight);
@@ -167,8 +199,8 @@ public class RabbitMovement : MonoBehaviour
             float leftAngle = Mathf.Atan2((boundary.Center - (Vector2)transform.position).y, (boundary.Center - (Vector2)transform.position).x) * Mathf.Rad2Deg - 45f;
             float rightAngle = Mathf.Atan2((boundary.Center - (Vector2)transform.position).y, (boundary.Center - (Vector2)transform.position).x) * Mathf.Rad2Deg + 45f;
 
-            Vector2 leftDirection = new Vector2(Mathf.Cos(leftAngle * Mathf.Deg2Rad), Mathf.Sin(leftAngle * Mathf.Deg2Rad));
-            Vector2 rightDirection = new Vector2(Mathf.Cos(rightAngle * Mathf.Deg2Rad), Mathf.Sin(rightAngle * Mathf.Deg2Rad));
+            Vector2 leftDirection = new(Mathf.Cos(leftAngle * Mathf.Deg2Rad), Mathf.Sin(leftAngle * Mathf.Deg2Rad));
+            Vector2 rightDirection = new(Mathf.Cos(rightAngle * Mathf.Deg2Rad), Mathf.Sin(rightAngle * Mathf.Deg2Rad));
 
             Gizmos.color = Color.yellow;
             Gizmos.DrawLine(transform.position, transform.position + (Vector3)leftDirection * 2f);
