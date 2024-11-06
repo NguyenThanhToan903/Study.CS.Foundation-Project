@@ -7,6 +7,7 @@ public class RabbitPathfinding : MonoBehaviour
     private Rigidbody2D rb;
     private Vector2 moveDir;
     private Boundary boundary;
+    private Vector2 targetPosition; // Store target position
 
     private void Awake()
     {
@@ -26,10 +27,31 @@ public class RabbitPathfinding : MonoBehaviour
 
     public void MoveTo(Vector2 targetPosition)
     {
-        moveDir = targetPosition;
+        this.targetPosition = targetPosition;
+        moveDir = (targetPosition - rb.position).normalized;
     }
+
+    public void StopMovement()
+    {
+        moveDir = Vector2.zero;
+    }
+
     public void SetBoundary(Boundary boundary)
     {
         this.boundary = boundary;
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.blue;
+        Gizmos.DrawSphere(targetPosition, 0.2f);
+
+        Gizmos.color = Color.green;
+        Gizmos.DrawLine(transform.position, targetPosition);
+
+        if (boundary != null)
+        {
+            boundary.OnDrawGizmos();
+        }
     }
 }

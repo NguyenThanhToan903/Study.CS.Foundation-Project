@@ -79,49 +79,6 @@ public class RabbitMovement : MonoBehaviour
         CheckBoundary();
     }
 
-    //private void CheckBoundary()
-    //{
-    //    float distanceToCenter = Vector3.Distance(transform.position, boundary.Center);
-
-    //    Debug.Log("Boundary Radius: " + boundary.Radius);
-    //    if (distanceToCenter >= boundary.Radius - 2f)
-    //    {
-    //        timeSinceLastUpdate += Time.fixedDeltaTime;
-    //        if (timeSinceLastUpdate >= 2f)
-    //        {
-    //            directionToCenter = (boundary.Center - (Vector2)transform.position).normalized;
-
-    //            float leftAngle = Mathf.Atan2(directionToCenter.y, directionToCenter.x) * Mathf.Rad2Deg - 45f;
-    //            float rightAngle = Mathf.Atan2(directionToCenter.y, directionToCenter.x) * Mathf.Rad2Deg + 45f;
-    //            float randomAngle = Random.Range(leftAngle, rightAngle);
-
-    //            Vector2 randomDirection = new Vector2(Mathf.Cos(randomAngle * Mathf.Deg2Rad), Mathf.Sin(randomAngle * Mathf.Deg2Rad)).normalized;
-    //            velocity = randomDirection;
-    //            timeSinceLastUpdate = 0f;
-    //        }
-
-    //        if (Vector2.Distance(transform.position, playerTransform.position) < detectionRadius)
-    //        {
-    //            directionToPlayer = (Vector2)(transform.position - playerTransform.position).normalized;
-    //            velocity = (directionToPlayer + (directionToCenter * 0.7f) + velocity * 1.3f).normalized;
-    //        }
-
-    //        transform.position += (Vector3)(velocity * slowSpeed) * Time.deltaTime;
-    //    }
-    //    else
-    //    {
-    //        if (Vector2.Distance(transform.position, playerTransform.position) < detectionRadius)
-    //        {
-    //            directionToPlayer = (Vector2)(transform.position - playerTransform.position).normalized;
-    //            Vector2 directionToCenter = ((Vector2)boundary.Center - (Vector2)transform.position).normalized;
-
-    //            velocity = (directionToPlayer + (directionToCenter * 0.7f) + velocity * 1.3f).normalized;
-    //        }
-
-    //        transform.position += (Vector3)(velocity * speed) * Time.deltaTime;
-    //    }
-    //}
-
     private void CheckBoundary()
     {
         float distanceToCenter = Vector3.Distance(transform.position, boundary.Center);
@@ -176,6 +133,7 @@ public class RabbitMovement : MonoBehaviour
         Gizmos.color = Color.blue;
         Gizmos.DrawLine(transform.position, transform.position + (Vector3)velocity);
 
+        // Draw boundary square
         if (boundary != null)
         {
             Vector2 topLeft = new(boundary.PointA.x, boundary.PointB.y);
@@ -190,6 +148,7 @@ public class RabbitMovement : MonoBehaviour
             Gizmos.DrawLine(bottomLeft, topLeft);
         }
 
+        // Draw line to boundary center
         if (boundary != null)
         {
             Gizmos.color = Color.magenta;
@@ -206,6 +165,7 @@ public class RabbitMovement : MonoBehaviour
             Gizmos.DrawLine(transform.position, transform.position + (Vector3)rightDirection * 2f);
         }
 
+        // Draw detection radius around rabbit
         if (Vector2.Distance(transform.position, playerTransform.position) < detectionRadius)
         {
             Gizmos.color = Color.green;
@@ -214,6 +174,13 @@ public class RabbitMovement : MonoBehaviour
 
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, detectionRadius);
+
+        // Draw target position and path
+        Gizmos.color = Color.magenta;
+        Vector2 targetPosition = (Vector2)transform.position + velocity * 2f; // Adjust 2f based on range
+        Gizmos.DrawSphere(targetPosition, 0.2f);  // Mark target position with sphere
+        Gizmos.DrawLine(transform.position, targetPosition); // Path line to target
     }
+
 
 }

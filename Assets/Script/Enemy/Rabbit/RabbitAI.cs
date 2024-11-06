@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class RabbitAI : MonoBehaviour
 {
-
     private enum State
     {
         Roaming
@@ -13,6 +12,9 @@ public class RabbitAI : MonoBehaviour
 
     private RabbitPathfinding rabbitPathfinding;
 
+    [SerializeField] private Boundary boundary;
+    [SerializeField] private float roamDuration = 2f;
+    [SerializeField] private float stopDuration = 1f;
 
     private void Awake()
     {
@@ -22,22 +24,43 @@ public class RabbitAI : MonoBehaviour
 
     public void StartRoaming()
     {
-        StartCoroutine(RoamingRountine());
+        StartCoroutine(RoamingRoutine());
     }
 
-    private IEnumerator RoamingRountine()
+    //private IEnumerator RoamingRoutine()
+    //{
+    //    while (state == State.Roaming)
+    //    {
+    //        Vector2 roamPosition = GetRoamingPosition();
+    //        rabbitPathfinding.MoveTo(roamPosition);
+    //        yield return new WaitForSeconds(roamDuration);
+
+    //        rabbitPathfinding.MoveTo(Vector2.zero);
+    //        yield return new WaitForSeconds(stopDuration);
+    //    }
+    //}
+
+    private IEnumerator RoamingRoutine()
     {
         while (state == State.Roaming)
         {
+
             Vector2 roamPosition = GetRoamingPosition();
             rabbitPathfinding.MoveTo(roamPosition);
-            yield return new WaitForSeconds(2f);
+
+            yield return new WaitForSeconds(roamDuration);
+
+            rabbitPathfinding.StopMovement();
+
+            yield return new WaitForSeconds(stopDuration);
         }
     }
 
+
     private Vector2 GetRoamingPosition()
     {
-        return new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f)).normalized;
+        float x = Random.Range(boundary.PointA.x, boundary.PointB.x);
+        float y = Random.Range(boundary.PointA.y, boundary.PointB.y);
+        return new Vector2(x, y);
     }
-
 }

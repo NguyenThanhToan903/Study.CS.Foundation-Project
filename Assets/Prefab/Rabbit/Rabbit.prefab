@@ -110,6 +110,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d0ee4bb33c8d85498d4d6028b437034, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  boundary: {fileID: 11400000, guid: f664354e66081d94d91fdc8e1b670c0b, type: 2}
 --- !u!114 &6975681895636677181
 MonoBehaviour:
   m_ObjectHideFlags: 0
