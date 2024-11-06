@@ -4,5 +4,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "ScriptableObject/List Rabbit Variable")]
 public class ListRabbitVariable : ScriptableObject
 {
-    public List<RabbitMovement> rabbitMovement = new List<RabbitMovement>();
+    public List<RabbitPathfinding> rabbitPathfinding = new List<RabbitPathfinding>();
 }
+
+

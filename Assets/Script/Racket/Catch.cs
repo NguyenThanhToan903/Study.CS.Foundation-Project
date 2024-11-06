@@ -7,7 +7,7 @@ public class Catch : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.GetComponent<RabbitMovement>())
+        if (other.gameObject.GetComponent<RabbitPathfinding>())
         {
             scoreSystem.takeScore();
             Destroy(other.gameObject);
