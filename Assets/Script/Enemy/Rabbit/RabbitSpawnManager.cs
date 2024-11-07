@@ -89,8 +89,7 @@ public class RabbitSpawnManager : MonoBehaviour
             RabbitPathfinding rabbitPathfinding = rabbit.GetComponent<RabbitPathfinding>();
             rabbitPathfinding.SetBoundary(boundary);
 
-            // Add the RabbitPathfinding component to the ListRabbitVariable
-            listRabbitVariable.rabbitPathfinding.Add(rabbitPathfinding);  // Add the RabbitPathfinding to the list
+            listRabbitVariable.rabbitPathfinding.Add(rabbitPathfinding);
         }
     }
 }
