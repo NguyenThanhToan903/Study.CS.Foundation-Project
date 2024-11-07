@@ -109,16 +109,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be4d5d94f9053be47975c821fb4c07f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
+  speed: 2
   slowSpeed: 2
+  player: {fileID: 5930909219923907213, guid: baa8bae909d990e44aa962cafa35ea78, type: 3}
   playerTransform: {fileID: 0}
   model: {fileID: 778282378860521684}
   modelTransform: {fileID: 3225538735493491365}
-  detectionRadius: 5
-  velocity: {x: 0, y: 0}
+  detectionRadius: 2
+  visionAngle: 270
   boundary: {fileID: 11400000, guid: f664354e66081d94d91fdc8e1b670c0b, type: 2}
   timeSinceLastUpdate: 0
   directionToCenter: {x: 0, y: 0}
+  rabbits: {fileID: 11400000, guid: d647109b89881e342a2a80e68a36e386, type: 2}
+  moveDuration: 2
+  stopDuration: 1
 --- !u!1 &1883121320689261907
 GameObject:
   m_ObjectHideFlags: 0
