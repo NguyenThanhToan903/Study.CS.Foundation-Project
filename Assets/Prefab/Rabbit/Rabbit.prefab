@@ -11,8 +11,7 @@ GameObject:
   - component: {fileID: 3225538735493491365}
   - component: {fileID: 7077959273255139221}
   - component: {fileID: 1353400127104348694}
-  - component: {fileID: 6273280168957445827}
-  - component: {fileID: 6975681895636677181}
+  - component: {fileID: 5831778952774935156}
   m_Layer: 10
   m_Name: rabbit
   m_TagString: Rabbit
@@ -98,7 +97,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!114 &6273280168957445827
+--- !u!114 &5831778952774935156
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -107,23 +106,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 778282378860521684}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6d0ee4bb33c8d85498d4d6028b437034, type: 3}
+  m_Script: {fileID: 11500000, guid: be4d5d94f9053be47975c821fb4c07f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speed: 5
+  slowSpeed: 2
+  playerTransform: {fileID: 0}
+  model: {fileID: 778282378860521684}
+  modelTransform: {fileID: 3225538735493491365}
+  detectionRadius: 5
+  velocity: {x: 0, y: 0}
   boundary: {fileID: 11400000, guid: f664354e66081d94d91fdc8e1b670c0b, type: 2}
---- !u!114 &6975681895636677181
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 778282378860521684}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2daa44c18db716949baa43a7a6b46aa2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveSpeed: 2
+  timeSinceLastUpdate: 0
+  directionToCenter: {x: 0, y: 0}
 --- !u!1 &1883121320689261907
 GameObject:
   m_ObjectHideFlags: 0
@@ -153,7 +148,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 3225538735493491365}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

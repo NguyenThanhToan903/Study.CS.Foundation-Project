@@ -37,7 +37,7 @@ public class RabbitMovement : MonoBehaviour
 
     private void Start()
     {
-        modelTransform = model != null ? model.transform : null;
+        modelTransform = model != null ? model.GetComponentInChildren<Transform>() : null;
         if (modelTransform == null)
         {
             Debug.LogError("Model object not found!");
@@ -46,7 +46,7 @@ public class RabbitMovement : MonoBehaviour
         SetRandomDirection();
         boundary.Radius = Mathf.Min(Mathf.Min(Mathf.Abs(boundary.PointA.x), Mathf.Abs(boundary.PointA.y)), Mathf.Min(Mathf.Abs(boundary.PointB.x), Mathf.Abs(boundary.PointB.y)));
         playerTransform = PlayerMovement.Instance.transform;
-
+        Debug.Log("Boundary Radius: " + boundary.Radius);
         directionToCenter = (Vector2)(boundary.Center - (Vector2)transform.position).normalized;
     }
 
