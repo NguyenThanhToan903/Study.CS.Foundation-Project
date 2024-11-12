@@ -19,8 +19,6 @@ public class RabbitMovement : MonoBehaviour
 
     [SerializeField] private float visionAngle = 270f;
 
-    [SerializeField] public Vector3 Velocity { private set; get; }
-
     [SerializeField] private Boundary boundary;
 
     [SerializeField] private float timeSinceLastUpdate = 0f;
@@ -29,18 +27,19 @@ public class RabbitMovement : MonoBehaviour
 
     [SerializeField] private ListRabbitVariable rabbits;
 
-    Vector2 directionToPlayer = Vector2.zero;
-
-
     [SerializeField] private float moveDuration;
 
     [SerializeField] private float stopDuration;
 
+    //Vector2 directionToPlayer = Vector2.zero;
+
+    public Vector3 Velocity { private set; get; }
+
+    private Vector2 currentDirection;
+
     private float stateTimer;
 
     private bool isMoving = true;
-
-    private Vector2 currentDirection;
 
     private void Start()
     {
@@ -54,47 +53,59 @@ public class RabbitMovement : MonoBehaviour
 
         currentDirection = GetRandomDirection();
         stateTimer = moveDuration;
-
-
     }
 
     private void Update()
     {
-        //Move();
         SetSpriteScale();
     }
-
-
-
 
     private void FixedUpdate()
     {
         stateTimer -= Time.fixedDeltaTime;
 
-        if (isMoving)
+        Vector3 nextPosition = transform.position + (Vector3)(currentDirection * speed * Time.fixedDeltaTime);
+        Debug.Log("IsWithinBoundary: " + IsWithinBoundary(nextPosition));
+
+        if (!IsWithinBoundary(nextPosition))
         {
+            currentDirection = GetDirectionToCenter();
             Velocity = currentDirection * speed;
-            transform.position += (Vector3)Velocity * Time.fixedDeltaTime;
-
-            //LookRotation();
-
-            if (stateTimer <= 0)
-            {
-                isMoving = false;
-                stateTimer = GetRandomTime();
-                Velocity = Vector3.zero;
-            }
         }
-        else
+
+        if (stateTimer <= 0 && isMoving)
         {
-            if (stateTimer <= 0)
-            {
-                isMoving = true;
-                stateTimer = GetRandomTime();
-                currentDirection = GetRandomDirection();
-            }
+            isMoving = false;
+            stateTimer = GetRandomTime(); // Reset for stop phase
+            Velocity = Vector3.zero;
+        }
+        else if (stateTimer <= 0 && !isMoving)
+        {
+            isMoving = true;
+            stateTimer = GetRandomTime(); // Reset for move phase
+            currentDirection = GetRandomDirection();
         }
 
+    }
+
+    private Vector2 GetDirectionToCenter()
+    {
+        if (boundary == null) return Vector2.zero;
+
+        Vector2 center = new Vector2(
+            (boundary.PointA.x + boundary.PointB.x) / 2,
+            (boundary.PointA.y + boundary.PointB.y) / 2
+        );
+        Debug.Log(center);
+        return (center - (Vector2)transform.position).normalized;
+    }
+
+    private bool IsWithinBoundary(Vector3 position)
+    {
+        if (boundary == null) return true;
+        Debug.Log("IsWithinBoundary");
+        return position.x >= boundary.PointA.x && position.x <= boundary.PointB.x &&
+               position.y >= boundary.PointA.y && position.y <= boundary.PointB.y;
     }
 
     private float GetRandomTime()
@@ -104,16 +115,11 @@ public class RabbitMovement : MonoBehaviour
 
     private Vector2 GetRandomDirection()
     {
-        float randomAngle = Random.Range(0f, 3 / 2f * Mathf.PI);
-        return new Vector2(Mathf.Cos(randomAngle), Mathf.Sin(randomAngle)).normalized + CalculateVelocity();
+        float randomAngle = Random.Range(0f, 2 * Mathf.PI);
+        Vector2 randomDirection = new Vector2(Mathf.Cos(randomAngle), Mathf.Sin(randomAngle)).normalized;
+        return randomDirection == Vector2.zero ? Vector2.up : randomDirection; // Avoid zero vector
     }
 
-    private void LookRotation()
-    {
-        //if (Velocity != Vector3.zero)
-        //    transform.rotation = Quaternion.Slerp(transform.localRotation,
-        //        Quaternion.LookRotation(Velocity), speed * Time.fixedDeltaTime);
-    }
 
     private Vector2 CalculateVelocity()
     {
@@ -136,11 +142,6 @@ public class RabbitMovement : MonoBehaviour
         }
     }
 
-
-
-
-
-
     private List<RabbitMovement> RabbitsInRange()
     {
         var listRabbit = rabbits.rabbitMovement.FindAll(rabbit => rabbit != this && (rabbit.transform.position - transform.position).magnitude <= detectionRadius && InVisionCone(rabbit.transform.position));
@@ -154,57 +155,6 @@ public class RabbitMovement : MonoBehaviour
         float cosHalfVisionAngle = Mathf.Cos(visionAngle * 0.5f * Mathf.Deg2Rad);
         return dotProduct >= cosHalfVisionAngle;
     }
-
-    //private void OnDrawGizmos()
-    //{
-    //    Gizmos.color = Color.blue;
-    //    Gizmos.DrawLine(transform.position, transform.position + (Vector3)Velocity);
-
-    //    if (boundary != null)
-    //    {
-    //        Vector2 topLeft = new(boundary.PointA.x, boundary.PointB.y);
-    //        Vector2 topRight = boundary.PointB;
-    //        Vector2 bottomLeft = boundary.PointA;
-    //        Vector2 bottomRight = new(boundary.PointB.x, boundary.PointA.y);
-
-    //        Gizmos.color = Color.cyan;
-    //        Gizmos.DrawLine(topLeft, topRight);
-    //        Gizmos.DrawLine(topRight, bottomRight);
-    //        Gizmos.DrawLine(bottomRight, bottomLeft);
-    //        Gizmos.DrawLine(bottomLeft, topLeft);
-    //    }
-
-    //    if (boundary != null)
-    //    {
-    //        Gizmos.color = Color.magenta;
-    //        Gizmos.DrawLine(transform.position, boundary.Center);
-
-    //        float leftAngle = Mathf.Atan2((boundary.Center - (Vector2)transform.position).y, (boundary.Center - (Vector2)transform.position).x) * Mathf.Rad2Deg - 45f;
-    //        float rightAngle = Mathf.Atan2((boundary.Center - (Vector2)transform.position).y, (boundary.Center - (Vector2)transform.position).x) * Mathf.Rad2Deg + 45f;
-
-    //        Vector2 leftDirection = new(Mathf.Cos(leftAngle * Mathf.Deg2Rad), Mathf.Sin(leftAngle * Mathf.Deg2Rad));
-    //        Vector2 rightDirection = new(Mathf.Cos(rightAngle * Mathf.Deg2Rad), Mathf.Sin(rightAngle * Mathf.Deg2Rad));
-
-    //        Gizmos.color = Color.yellow;
-    //        Gizmos.DrawLine(transform.position, transform.position + (Vector3)leftDirection * 2f);
-    //        Gizmos.DrawLine(transform.position, transform.position + (Vector3)rightDirection * 2f);
-    //    }
-
-    //    if (Vector2.Distance(transform.position, playerTransform.position) < detectionRadius)
-    //    {
-    //        Gizmos.color = Color.green;
-    //        Gizmos.DrawLine(transform.position, playerTransform.position);
-    //    }
-
-    //    //Gizmos.color = Color.red;
-    //    //Gizmos.DrawWireSphere(transform.position, detectionRadius);
-
-    //    Gizmos.color = Color.magenta;
-    //    Vector2 targetPosition = (Vector2)transform.position + (Vector2)Velocity * 2f;
-    //    //Gizmos.DrawSphere(targetPosition, 0.2f);
-    //    Gizmos.DrawLine(transform.position, targetPosition);
-    //}
-
 
     private void OnDrawGizmos()
     {
@@ -225,47 +175,26 @@ public class RabbitMovement : MonoBehaviour
             Gizmos.DrawLine(bottomLeft, topLeft);
         }
 
-        //if (boundary != null)
-        //{
-        //    Gizmos.color = Color.magenta;
-        //    Gizmos.DrawLine(transform.position, boundary.Center);
-
-        //    float leftAngle = Mathf.Atan2((boundary.Center - (Vector2)transform.position).y, (boundary.Center - (Vector2)transform.position).x) * Mathf.Rad2Deg - 45f;
-        //    float rightAngle = Mathf.Atan2((boundary.Center - (Vector2)transform.position).y, (boundary.Center - (Vector2)transform.position).x) * Mathf.Rad2Deg + 45f;
-
-        //    Vector2 leftDirection = new(Mathf.Cos(leftAngle * Mathf.Deg2Rad), Mathf.Sin(leftAngle * Mathf.Deg2Rad));
-        //    Vector2 rightDirection = new(Mathf.Cos(rightAngle * Mathf.Deg2Rad), Mathf.Sin(rightAngle * Mathf.Deg2Rad));
-
-        //    Gizmos.color = Color.yellow;
-        //    Gizmos.DrawLine(transform.position, transform.position + (Vector3)leftDirection * 2f);
-        //    Gizmos.DrawLine(transform.position, transform.position + (Vector3)rightDirection * 2f);
-        //}
-
         if (Vector2.Distance(transform.position, playerTransform.position) < detectionRadius)
         {
             Gizmos.color = Color.green;
             Gizmos.DrawLine(transform.position, playerTransform.position);
         }
 
-        // Vẽ góc nhìn 270°
         Gizmos.color = Color.red;
 
-        // Tính toán hướng trái và phải trong phạm vi góc nhìn
-        float halfVisionAngle = visionAngle * 0.5f; // Góc 135° (nửa của 270°)
+        Gizmos.color = Color.red;
 
-        // Vẽ hai đường (tạo thành một vùng nhìn 270°)
-        Vector2 leftDirection = Quaternion.Euler(0, 0, -halfVisionAngle) * transform.right;
-        Vector2 rightDirection = Quaternion.Euler(0, 0, halfVisionAngle) * transform.right;
+        Vector2 normalizedVelocity = Velocity.normalized;
+
+        float halfVisionAngle = visionAngle * 0.5f;
+
+        Vector2 leftDirection = Quaternion.Euler(0, 0, -halfVisionAngle) * normalizedVelocity;
+        Vector2 rightDirection = Quaternion.Euler(0, 0, halfVisionAngle) * normalizedVelocity;
 
         Gizmos.DrawLine(transform.position, transform.position + (Vector3)leftDirection * detectionRadius);
         Gizmos.DrawLine(transform.position, transform.position + (Vector3)rightDirection * detectionRadius);
 
-        // Vẽ trung tâm của vùng nhìn (để dễ theo dõi)
-        Gizmos.DrawLine(transform.position, transform.position + (Vector3)transform.right * detectionRadius);
+        Gizmos.DrawLine(transform.position, transform.position + (Vector3)normalizedVelocity * detectionRadius);
     }
-
-    //luu lai huong truoc do, tao huong moi dua tren huong truoc do
-
-
-
 }
