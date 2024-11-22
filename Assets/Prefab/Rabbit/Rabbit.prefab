@@ -78,7 +78,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 778282378860521684}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -110,11 +110,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 1
-  numberOfRay: 10
-  angle: 135
-  distanceAvoid: 3
+  distanceAvoid: 1
   wallDetectionDistance: 3
-  rabbits: {fileID: 11400000, guid: d647109b89881e342a2a80e68a36e386, type: 2}
+  sideRayAngle: 40
 --- !u!1 &1883121320689261907
 GameObject:
   m_ObjectHideFlags: 0
