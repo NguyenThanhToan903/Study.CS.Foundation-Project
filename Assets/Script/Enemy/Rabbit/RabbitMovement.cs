@@ -161,19 +161,17 @@ public class RabbitMovement : MonoBehaviour
             // Sử dụng Mathf.Lerp để tạo dải khoảng cách từ wallDetectionDistance đến distanceAvoid
             float adjustedDistance = Mathf.Lerp(wallDetectionDistance, distanceAvoid, Mathf.Abs(currentAngle) / halfAngle);
 
-            // Tính chiều dài tia thay đổi từ ngắn nhất (ở 2 cạnh) tới dài nhất (ở giữa)
             if (Mathf.Abs(currentAngle) > halfAngle) // Tia ở cạnh
             {
                 adjustedDistance = Mathf.Lerp(wallDetectionDistance, distanceAvoid, Mathf.Abs(currentAngle) / halfAngle);
             }
 
-            // Thực hiện raycast
             RaycastHit2D hit = Physics2D.Raycast(currentPosition, direction, adjustedDistance);
 
-            if (hit.collider != null && hit.collider.CompareTag("Wall")) // Giả sử các tường có tag "Wall"
+            if (hit.collider != null && hit.collider.CompareTag("Wall"))
             {
                 movementDirection = -movementDirection;
-                break; // Thoát vòng lặp nếu phát hiện va chạm
+                break;
             }
         }
     }
