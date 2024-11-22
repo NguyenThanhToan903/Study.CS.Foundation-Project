@@ -76,10 +76,53 @@ public class RabbitMovement : MonoBehaviour
 
     private void AdjustDirectionToAvoidWall()
     {
-        float randomAngle = Random.Range(-90f, 90f);
-        movementDirection = RotateVector(movementDirection, randomAngle).normalized;
-        Debug.Log($"Adjusting direction to avoid wall: New Direction = {movementDirection}");
+        // Phát tia ray từ vị trí hiện tại theo hướng di chuyển
+        Vector2 origin = transform.position;
+        RaycastHit2D hit = Physics2D.Raycast(origin, movementDirection, wallDetectionDistance);
+
+        if (hit.collider != null)
+        {
+            // Vector pháp tuyến tại điểm va chạm
+            Vector2 normal = hit.normal;
+
+            // Tính hướng mới bằng cách cộng hướng hiện tại với vector pháp tuyến
+            movementDirection = (movementDirection + normal).normalized;
+
+            Debug.Log($"Wall detected, adjusting direction. New Direction = {movementDirection}");
+
+            Debug.DrawLine(hit.point, hit.point + normal, Color.red, 1f);
+            Debug.DrawLine(hit.point, hit.point + movementDirection, Color.green, 1f); // Hướng mới
+        }
     }
+
+    //private void AdjustDirectionToAvoidWall()
+    //{
+    //    // Phát tia ray từ vị trí hiện tại theo hướng di chuyển
+    //    Vector2 origin = transform.position;
+    //    RaycastHit2D hit = Physics2D.Raycast(origin, movementDirection, wallDetectionDistance);
+
+    //    if (hit.collider != null)
+    //    {
+    //        // Vector pháp tuyến tại điểm va chạm
+    //        Vector2 normal = hit.normal;
+
+    //        // Tính vector phản chiếu
+    //        Vector2 reflectedDirection = Vector2.Reflect(movementDirection, normal);
+
+    //        // Kết hợp hướng di chuyển hiện tại với vector phản chiếu
+    //        movementDirection = (movementDirection + reflectedDirection).normalized;
+
+    //        Debug.Log($"Wall detected, adjusting direction. New Direction = {movementDirection}");
+
+    //        // Debug: Vẽ vector pháp tuyến và hướng di chuyển mới
+    //        Debug.DrawLine(hit.point, hit.point + normal, Color.red, 1f); // Pháp tuyến
+    //        Debug.DrawLine(hit.point, hit.point + reflectedDirection, Color.blue, 1f); // Hướng phản chiếu
+    //        Debug.DrawLine(hit.point, hit.point + movementDirection, Color.green, 1f); // Hướng mới
+    //    }
+    //}
+
+
+
 
     private bool CastRay(Vector2 origin, Vector2 direction, float distance)
     {
