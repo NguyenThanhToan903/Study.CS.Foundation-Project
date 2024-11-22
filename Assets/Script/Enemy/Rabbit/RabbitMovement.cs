@@ -86,56 +86,18 @@ public class RabbitMovement : MonoBehaviour
         }
     }
 
-    private void StartWaiting()
-    {
-        if (!wallDetected)
-        {
-            wallDetected = true;
-            isWaiting = true;
-            waitDuration = Random.Range(0.5f, 1.5f);
-            Debug.Log($"Wall detected! Waiting for {waitDuration}s before changing direction.");
-        }
-    }
 
-    private bool CastRay(Vector2 origin, Vector2 direction, float distance)
-    {
-        RaycastHit2D hit = Physics2D.Raycast(origin, direction, distance);
-        if (hit.collider != null && hit.collider.CompareTag("Wall"))
-        {
-            Debug.DrawLine(origin, origin + direction * distance, Color.red);
-            return true;
-        }
-        Debug.DrawLine(origin, origin + direction * distance, Color.green);
-        return false;
-    }
-
-    private Vector2 RotateVector(Vector2 vector, float angle)
-    {
-        float radians = angle * Mathf.Deg2Rad;
-        float cos = Mathf.Cos(radians);
-        float sin = Mathf.Sin(radians);
-        return new Vector2(
-            vector.x * cos - vector.y * sin,
-            vector.x * sin + vector.y * cos
-        );
-    }
-
-    private void CheckRabbitCollision()
-    {
-        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, distanceAvoid);
-        foreach (Collider2D hit in hits)
-        {
-            if (hit.gameObject == this.gameObject) continue;
-
-            if (hit.CompareTag("Rabbit") || hit.CompareTag("Player"))
+            if (Mathf.Abs(currentAngle) > halfAngle) // Tia ở cạnh
             {
-                Vector2 otherRabbitPosition = hit.transform.position;
-                Vector2 selfPosition = transform.position;
+                adjustedDistance = Mathf.Lerp(wallDetectionDistance, distanceAvoid, Mathf.Abs(currentAngle) / halfAngle);
+            }
 
-                Vector2 avoidVector = (selfPosition - otherRabbitPosition).normalized;
-                movementDirection = (movementDirection + avoidVector).normalized;
+            RaycastHit2D hit = Physics2D.Raycast(currentPosition, direction, adjustedDistance);
 
-                Debug.Log("Avoiding other rabbit...");
+            if (hit.collider != null && hit.collider.CompareTag("Wall"))
+            {
+                movementDirection = -movementDirection;
+                break;
 
             }
         }
