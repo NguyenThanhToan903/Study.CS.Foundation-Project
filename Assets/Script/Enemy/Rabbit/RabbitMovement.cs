@@ -21,7 +21,14 @@ public class RabbitMovement : MonoBehaviour
     private void Update()
     {
         this.transform.position += (Vector3)(speed * Time.deltaTime * movementDirection);
-
+        if ((speed * Time.deltaTime * movementDirection).x > 0)
+        {
+            this.transform.GetChild(0).localScale = new Vector3(1, 1, 1);
+        }
+        else
+        {
+            this.transform.GetChild(0).localScale = new Vector3(-1, 1, 1);
+        }
         if (isWaiting)
         {
             waitTimer += Time.deltaTime;
@@ -37,10 +44,11 @@ public class RabbitMovement : MonoBehaviour
         }
         else
         {
-            AvoidWalls();
+            AvoidWallsAndRabbits();
 
-            AvoidOtherRabbits();
+            ResolveStuckSituation();
         }
+
     }
 
     private void SetRandomDirection()
@@ -49,78 +57,234 @@ public class RabbitMovement : MonoBehaviour
         movementDirection = new Vector2(Mathf.Cos(randomAngle), Mathf.Sin(randomAngle)).normalized;
     }
 
-    private void AvoidWalls()
+    private void AvoidWallsAndRabbits()
     {
-        Vector2 currentPosition = transform.position;
+        bool nearWall = CastRay(transform.position, movementDirection, wallDetectionDistance);
 
-        if (CastRay(currentPosition, movementDirection, wallDetectionDistance))
+        if (nearWall)
         {
             AdjustDirectionToAvoidWall();
-            return;
         }
-
-        Vector2 leftDirection = RotateVector(movementDirection, -sideRayAngle);
-        if (CastRay(currentPosition, leftDirection, distanceAvoid))
+        else
         {
-            AdjustDirectionToAvoidWall();
-            return;
-        }
-
-        Vector2 rightDirection = RotateVector(movementDirection, sideRayAngle);
-        if (CastRay(currentPosition, rightDirection, distanceAvoid))
-        {
-            AdjustDirectionToAvoidWall();
-            return;
+            AvoidOtherRabbits();
         }
     }
 
     private void AdjustDirectionToAvoidWall()
     {
-        // Phát tia ray từ vị trí hiện tại theo hướng di chuyển
         Vector2 origin = transform.position;
         RaycastHit2D hit = Physics2D.Raycast(origin, movementDirection, wallDetectionDistance);
 
         if (hit.collider != null)
         {
-            // Vector pháp tuyến tại điểm va chạm
-            Vector2 normal = hit.normal;
+            Vector2 wallNormal = hit.normal;
+            Vector2 reflectedDirection = Vector2.Reflect(movementDirection, wallNormal);
 
-            // Tính hướng mới bằng cách cộng hướng hiện tại với vector pháp tuyến
-            movementDirection = (movementDirection + normal).normalized;
+            // Thêm random nhỏ để đa dạng hóa hướng
+            float randomAngle = Random.Range(-30f, 30f);
+            Vector2 adjustedDirection = RotateVector(reflectedDirection, randomAngle);
 
-            Debug.Log($"Wall detected, adjusting direction. New Direction = {movementDirection}");
+            // Kết hợp tránh thỏ
+            Vector2 finalDirection = CombineAvoidance(adjustedDirection);
 
-            Debug.DrawLine(hit.point, hit.point + normal, Color.red, 1f);
-            Debug.DrawLine(hit.point, hit.point + movementDirection, Color.green, 1f); // Hướng mới
+            movementDirection = finalDirection.normalized;
+
+            Debug.Log($"Adjusted direction near wall: {movementDirection}");
+
+            Debug.DrawLine(hit.point, hit.point + wallNormal, Color.red, 1f);
+            Debug.DrawLine(hit.point, hit.point + adjustedDirection, Color.green, 1f);
+            Debug.DrawLine(hit.point, hit.point + reflectedDirection, Color.yellow, 1f);
         }
     }
 
+    private Vector2 CombineAvoidance(Vector2 baseDirection)
+    {
+        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, distanceAvoid);
+        Vector2 avoidanceVector = Vector2.zero;
+
+        foreach (Collider2D hit in hits)
+        {
+            if (hit.gameObject == this.gameObject) continue;
+
+            if (hit.CompareTag("Rabbit"))
+            {
+                Vector2 otherRabbitPosition = hit.transform.position;
+                Vector2 selfPosition = transform.position;
+
+                Vector2 avoidVector = (selfPosition - otherRabbitPosition).normalized;
+                avoidanceVector += avoidVector; // Tổng hợp hướng tránh thỏ
+            }
+        }
+
+        // Kết hợp hướng tránh tường và tránh thỏ, ưu tiên hướng tránh tường
+        Vector2 combinedDirection = (baseDirection + avoidanceVector * 0.5f).normalized;
+        return combinedDirection;
+    }
+
+
+
+
     //private void AdjustDirectionToAvoidWall()
     //{
-    //    // Phát tia ray từ vị trí hiện tại theo hướng di chuyển
     //    Vector2 origin = transform.position;
     //    RaycastHit2D hit = Physics2D.Raycast(origin, movementDirection, wallDetectionDistance);
 
     //    if (hit.collider != null)
     //    {
-    //        // Vector pháp tuyến tại điểm va chạm
-    //        Vector2 normal = hit.normal;
+    //        Vector2 wallNormal = hit.normal;
+    //        Vector2 reflectedDirection = Vector2.Reflect(movementDirection, wallNormal);
 
-    //        // Tính vector phản chiếu
-    //        Vector2 reflectedDirection = Vector2.Reflect(movementDirection, normal);
+    //        float randomAngle = Random.Range(-30f, 30f);
+    //        Vector2 adjustedDirection = RotateVector(reflectedDirection, randomAngle);
 
-    //        // Kết hợp hướng di chuyển hiện tại với vector phản chiếu
-    //        movementDirection = (movementDirection + reflectedDirection).normalized;
+    //        movementDirection = (movementDirection + adjustedDirection).normalized;
 
-    //        Debug.Log($"Wall detected, adjusting direction. New Direction = {movementDirection}");
+    //        Debug.Log($"Adjusted direction near wall: {movementDirection}");
 
-    //        // Debug: Vẽ vector pháp tuyến và hướng di chuyển mới
-    //        Debug.DrawLine(hit.point, hit.point + normal, Color.red, 1f); // Pháp tuyến
-    //        Debug.DrawLine(hit.point, hit.point + reflectedDirection, Color.blue, 1f); // Hướng phản chiếu
-    //        Debug.DrawLine(hit.point, hit.point + movementDirection, Color.green, 1f); // Hướng mới
+    //        Debug.DrawLine(hit.point, hit.point + wallNormal, Color.red, 1f);
+    //        Debug.DrawLine(hit.point, hit.point + adjustedDirection, Color.green, 1f);
+    //        Debug.DrawLine(hit.point, hit.point + reflectedDirection, Color.yellow, 1f);
     //    }
     //}
 
+    //private void AvoidOtherRabbits()
+    //{
+    //    Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, distanceAvoid);
+
+    //    foreach (Collider2D hit in hits)
+    //    {
+    //        if (hit.gameObject == this.gameObject) continue;
+
+    //        if (hit.CompareTag("Rabbit"))
+    //        {
+    //            Vector2 otherRabbitPosition = hit.transform.position;
+    //            Vector2 selfPosition = transform.position;
+
+    //            Vector2 avoidVector = (selfPosition - otherRabbitPosition).normalized;
+
+    //            //movementDirection = (movementDirection + avoidVector * 1.2f).normalized;
+    //            Vector2 newDirection = (movementDirection + avoidVector * 1.2f).normalized;
+
+    //            movementDirection = ClampDirection(movementDirection, newDirection, 60f);
+
+    //            Debug.Log("Avoiding other rabbit...");
+    //        }
+    //    }
+    //}
+
+    private void AvoidOtherRabbits()
+    {
+        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, distanceAvoid);
+        Vector2 accumulatedAvoidVector = Vector2.zero;
+
+        foreach (Collider2D hit in hits)
+        {
+            if (hit.gameObject == this.gameObject) continue;
+
+            if (hit.CompareTag("Rabbit"))
+            {
+                Vector2 otherRabbitPosition = hit.transform.position;
+                Vector2 selfPosition = transform.position;
+
+                Vector2 avoidVector = (selfPosition - otherRabbitPosition).normalized;
+                accumulatedAvoidVector += avoidVector; // Tổng hợp hướng tránh
+            }
+        }
+
+        if (hits.Length > 1)
+        {
+            // Nếu kẹt giữa nhiều thỏ, tăng cường tránh va chạm
+            movementDirection = ClampDirection(movementDirection, accumulatedAvoidVector.normalized, 60f);
+            Debug.Log("Avoiding multiple rabbits...");
+        }
+        else if (accumulatedAvoidVector != Vector2.zero)
+        {
+            // Chỉ cần tránh một thỏ, giữ góc trong phạm vi hẹp
+            movementDirection = ClampDirection(movementDirection, accumulatedAvoidVector.normalized, 30f);
+        }
+    }
+
+
+    private Vector2 ClampDirection(Vector2 currentDirection, Vector2 targetDirection, float maxAngle)
+    {
+        // Tính góc giữa hai hướng
+        float angle = Vector2.SignedAngle(currentDirection, targetDirection);
+
+        // Giới hạn góc trong phạm vi [-maxAngle, maxAngle]
+        if (angle > maxAngle)
+            angle = maxAngle;
+        else if (angle < -maxAngle)
+            angle = -maxAngle;
+
+        // Xoay hướng hiện tại với góc đã giới hạn
+        return RotateVector(currentDirection, angle).normalized;
+    }
+
+
+    //private void ResolveStuckSituation()
+    //{
+    //    Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, distanceAvoid);
+    //    bool isNearWall = Physics2D.Raycast(transform.position, movementDirection, wallDetectionDistance).collider != null;
+
+    //    if (hits.Length > 1 && isNearWall)
+    //    {
+    //        float randomAngle = Random.Range(90f, 180f);
+    //        movementDirection = RotateVector(movementDirection, randomAngle).normalized;
+
+    //        Debug.Log("Stuck detected! Changing direction...");
+    //    }
+    //}
+
+    //private void ResolveStuckSituation()
+    //{
+    //    Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, distanceAvoid);
+    //    bool isNearWall = Physics2D.Raycast(transform.position, movementDirection, wallDetectionDistance).collider != null;
+
+    //    if (hits.Length > 1 && isNearWall)
+    //    {
+    //        // Khi bị kẹt, thay vì xoay góc nhỏ, chọn một góc lớn ngẫu nhiên để thoát
+    //        float randomAngle = Random.Range(90f, 180f);
+    //        movementDirection = RotateVector(movementDirection, randomAngle).normalized;
+
+    //        Debug.Log("Stuck detected! Changing direction...");
+
+    //        // Thêm thời gian chờ để tránh thay đổi hướng liên tục
+    //        isWaiting = true;
+    //        waitDuration = Random.Range(0.5f, 1f); // Tùy chỉnh thời gian chờ
+    //    }
+    //}
+
+    private void ResolveStuckSituation()
+    {
+        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, distanceAvoid);
+        bool isNearWall = Physics2D.Raycast(transform.position, movementDirection, wallDetectionDistance).collider != null;
+
+        if (hits.Length > 1 && isNearWall)
+        {
+            // Chọn góc lớn ngẫu nhiên rời xa tường
+            float randomAngle = Random.Range(90f, 180f);
+            Vector2 escapeDirection = RotateVector(movementDirection, randomAngle).normalized;
+
+            // Kiểm tra hướng thoát không xuyên qua tường
+            if (!CastRay(transform.position, escapeDirection, wallDetectionDistance))
+            {
+                movementDirection = escapeDirection;
+                Debug.Log("Stuck detected near wall! Adjusting direction...");
+            }
+            else
+            {
+                // Nếu không thể thoát theo góc lớn, chọn góc nhỏ và chờ thêm thời gian
+                randomAngle = Random.Range(-30f, 30f);
+                movementDirection = RotateVector(movementDirection, randomAngle).normalized;
+                Debug.Log("Stuck and trapped! Waiting for escape...");
+            }
+
+            // Thêm thời gian chờ để tránh đổi hướng liên tục
+            isWaiting = true;
+            waitDuration = Random.Range(0.5f, 1f);
+        }
+    }
 
 
 
@@ -145,26 +309,6 @@ public class RabbitMovement : MonoBehaviour
             vector.x * cos - vector.y * sin,
             vector.x * sin + vector.y * cos
         );
-    }
-
-    private void AvoidOtherRabbits()
-    {
-        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, distanceAvoid);
-        foreach (Collider2D hit in hits)
-        {
-            if (hit.gameObject == this.gameObject) continue;
-
-            if (hit.CompareTag("Rabbit"))
-            {
-                Vector2 otherRabbitPosition = hit.transform.position;
-                Vector2 selfPosition = transform.position;
-
-                Vector2 avoidVector = (selfPosition - otherRabbitPosition).normalized;
-                movementDirection = (movementDirection + avoidVector).normalized;
-
-                Debug.Log("Avoiding other rabbit...");
-            }
-        }
     }
 
     private void OnDrawGizmos()
