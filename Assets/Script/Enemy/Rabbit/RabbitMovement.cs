@@ -126,57 +126,6 @@ public class RabbitMovement : MonoBehaviour
         return combinedDirection;
     }
 
-
-
-
-    //private void AdjustDirectionToAvoidWall()
-    //{
-    //    Vector2 origin = transform.position;
-    //    RaycastHit2D hit = Physics2D.Raycast(origin, movementDirection, wallDetectionDistance);
-
-    //    if (hit.collider != null)
-    //    {
-    //        Vector2 wallNormal = hit.normal;
-    //        Vector2 reflectedDirection = Vector2.Reflect(movementDirection, wallNormal);
-
-    //        float randomAngle = Random.Range(-30f, 30f);
-    //        Vector2 adjustedDirection = RotateVector(reflectedDirection, randomAngle);
-
-    //        movementDirection = (movementDirection + adjustedDirection).normalized;
-
-    //        Debug.Log($"Adjusted direction near wall: {movementDirection}");
-
-    //        Debug.DrawLine(hit.point, hit.point + wallNormal, Color.red, 1f);
-    //        Debug.DrawLine(hit.point, hit.point + adjustedDirection, Color.green, 1f);
-    //        Debug.DrawLine(hit.point, hit.point + reflectedDirection, Color.yellow, 1f);
-    //    }
-    //}
-
-    //private void AvoidOtherRabbits()
-    //{
-    //    Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, distanceAvoid);
-
-    //    foreach (Collider2D hit in hits)
-    //    {
-    //        if (hit.gameObject == this.gameObject) continue;
-
-    //        if (hit.CompareTag("Rabbit"))
-    //        {
-    //            Vector2 otherRabbitPosition = hit.transform.position;
-    //            Vector2 selfPosition = transform.position;
-
-    //            Vector2 avoidVector = (selfPosition - otherRabbitPosition).normalized;
-
-    //            //movementDirection = (movementDirection + avoidVector * 1.2f).normalized;
-    //            Vector2 newDirection = (movementDirection + avoidVector * 1.2f).normalized;
-
-    //            movementDirection = ClampDirection(movementDirection, newDirection, 60f);
-
-    //            Debug.Log("Avoiding other rabbit...");
-    //        }
-    //    }
-    //}
-
     private void AvoidOtherRabbits()
     {
         Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, distanceAvoid);
@@ -209,7 +158,6 @@ public class RabbitMovement : MonoBehaviour
         }
     }
 
-
     private Vector2 ClampDirection(Vector2 currentDirection, Vector2 targetDirection, float maxAngle)
     {
         // Tính góc giữa hai hướng
@@ -224,40 +172,6 @@ public class RabbitMovement : MonoBehaviour
         // Xoay hướng hiện tại với góc đã giới hạn
         return RotateVector(currentDirection, angle).normalized;
     }
-
-
-    //private void ResolveStuckSituation()
-    //{
-    //    Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, distanceAvoid);
-    //    bool isNearWall = Physics2D.Raycast(transform.position, movementDirection, wallDetectionDistance).collider != null;
-
-    //    if (hits.Length > 1 && isNearWall)
-    //    {
-    //        float randomAngle = Random.Range(90f, 180f);
-    //        movementDirection = RotateVector(movementDirection, randomAngle).normalized;
-
-    //        Debug.Log("Stuck detected! Changing direction...");
-    //    }
-    //}
-
-    //private void ResolveStuckSituation()
-    //{
-    //    Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, distanceAvoid);
-    //    bool isNearWall = Physics2D.Raycast(transform.position, movementDirection, wallDetectionDistance).collider != null;
-
-    //    if (hits.Length > 1 && isNearWall)
-    //    {
-    //        // Khi bị kẹt, thay vì xoay góc nhỏ, chọn một góc lớn ngẫu nhiên để thoát
-    //        float randomAngle = Random.Range(90f, 180f);
-    //        movementDirection = RotateVector(movementDirection, randomAngle).normalized;
-
-    //        Debug.Log("Stuck detected! Changing direction...");
-
-    //        // Thêm thời gian chờ để tránh thay đổi hướng liên tục
-    //        isWaiting = true;
-    //        waitDuration = Random.Range(0.5f, 1f); // Tùy chỉnh thời gian chờ
-    //    }
-    //}
 
     private void ResolveStuckSituation()
     {
@@ -289,8 +203,6 @@ public class RabbitMovement : MonoBehaviour
             waitDuration = Random.Range(0.5f, 1f);
         }
     }
-
-
 
     private bool CastRay(Vector2 origin, Vector2 direction, float distance)
     {
