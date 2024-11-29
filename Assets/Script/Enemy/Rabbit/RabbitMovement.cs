@@ -12,6 +12,7 @@ public class RabbitMovement : MonoBehaviour
     private float waitTimer;
     private float waitDuration;
     private bool isWaiting = false;
+    private Vector2 Velocity;
 
     private void Start()
     {
@@ -20,8 +21,10 @@ public class RabbitMovement : MonoBehaviour
 
     private void Update()
     {
-        this.transform.position += (Vector3)(speed * Time.deltaTime * movementDirection);
-        if ((speed * Time.deltaTime * movementDirection).x > 0)
+        Velocity = (speed * Time.deltaTime * movementDirection);
+        this.transform.position += (Vector3)Velocity;
+
+        if (Velocity.x > 0)
         {
             this.transform.GetChild(0).localScale = new Vector3(1, 1, 1);
         }
@@ -29,6 +32,7 @@ public class RabbitMovement : MonoBehaviour
         {
             this.transform.GetChild(0).localScale = new Vector3(-1, 1, 1);
         }
+
         if (isWaiting)
         {
             waitTimer += Time.deltaTime;
