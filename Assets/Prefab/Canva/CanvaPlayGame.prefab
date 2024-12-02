@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 2836191329536772668}
   - component: {fileID: 3138924101354306290}
   m_Layer: 5
-  m_Name: Canva
+  m_Name: CanvaPlayGame
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
