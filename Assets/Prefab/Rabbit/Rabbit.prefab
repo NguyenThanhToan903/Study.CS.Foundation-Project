@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1353400127104348694}
   - component: {fileID: 1662999603892080729}
   m_Layer: 10
-  m_Name: rabbit
+  m_Name: Rabbit
   m_TagString: Rabbit
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -111,8 +111,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 1
   distanceAvoid: 1
+  distancePlayerAvoid: 2
   wallDetectionDistance: 3
   sideRayAngle: 40
+  model: {fileID: 778282378860521684}
 --- !u!1 &1883121320689261907
 GameObject:
   m_ObjectHideFlags: 0

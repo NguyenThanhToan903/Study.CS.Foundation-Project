@@ -18,12 +18,22 @@ public class RabbitSpawnManager : MonoBehaviour
 
         for (int i = 0; i < rabbitCount; i++)
         {
-            Vector2 position = new Vector2(
-                Random.Range(boundary.PointA.x, boundary.PointB.x),
-                Random.Range(boundary.PointA.y, boundary.PointB.y)
-            );
-            GameObject rabbit = Instantiate(rabbitPrefab, position, Quaternion.identity);
-            rabbits.rabbitMovement.Add(rabbit.GetComponent<RabbitMovement>());
+            SummonTheRabbits(RandomPosition());
         }
+    }
+
+
+    private Vector2 RandomPosition()
+    {
+        return new Vector2(
+               Random.Range(boundary.PointA.x, boundary.PointB.x),
+               Random.Range(boundary.PointA.y, boundary.PointB.y)
+           );
+    }
+
+    private void SummonTheRabbits(Vector2 position)
+    {
+        GameObject rabbit = Instantiate(rabbitPrefab, position, Quaternion.identity);
+        rabbits.rabbitMovement.Add(rabbit.GetComponent<RabbitMovement>());
     }
 }

@@ -108,3 +108,4 @@ mono_crash.*
 
 # Uncomment if you're using JetBrains Rider and want to ignore Rider's cache folder
 # /.idea/
+/Assets/Script/Enemy/Rabbit/Boundery.cs
