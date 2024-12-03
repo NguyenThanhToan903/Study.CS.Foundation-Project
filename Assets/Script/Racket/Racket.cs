@@ -6,14 +6,6 @@ public class Racket : MonoBehaviour
 
     [SerializeField] private Transform racketCollider;
 
-    //[SerializeField] private PlayerMovement playerMovement;
-
-    //[SerializeField] private ActiveRacket activeRacket;
-
-    //[SerializeField] private Vector3 move;
-
-    //[SerializeField] private GameObject pauseGameMenu;
-
     private Animator animator;
 
     private void Awake()

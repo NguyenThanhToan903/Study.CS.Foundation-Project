@@ -122,67 +122,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1001 &89004855
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 4356529905887289285, guid: db6b31bdda5151547a7f298715863ba3, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4356529905887289285, guid: db6b31bdda5151547a7f298715863ba3, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4356529905887289285, guid: db6b31bdda5151547a7f298715863ba3, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4356529905887289285, guid: db6b31bdda5151547a7f298715863ba3, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4356529905887289285, guid: db6b31bdda5151547a7f298715863ba3, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4356529905887289285, guid: db6b31bdda5151547a7f298715863ba3, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4356529905887289285, guid: db6b31bdda5151547a7f298715863ba3, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4356529905887289285, guid: db6b31bdda5151547a7f298715863ba3, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4356529905887289285, guid: db6b31bdda5151547a7f298715863ba3, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4356529905887289285, guid: db6b31bdda5151547a7f298715863ba3, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7385225047725179817, guid: db6b31bdda5151547a7f298715863ba3, type: 3}
-      propertyPath: rabbitCount
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 8435483116454384241, guid: db6b31bdda5151547a7f298715863ba3, type: 3}
-      propertyPath: m_Name
-      value: RabbitSpawnManager
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: db6b31bdda5151547a7f298715863ba3, type: 3}
 --- !u!1 &666376448
 GameObject:
   m_ObjectHideFlags: 0
@@ -7275,6 +7214,21 @@ MonoBehaviour:
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
   m_PresetInfoIsWorld: 0
+--- !u!4 &4356529905799333106
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8435483116509825350}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &4360554508300270984
 Rigidbody2D:
   serializedVersion: 4
@@ -9308,7 +9262,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e216ec80cbfa153479ba2619f5db7ec7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  score: {fileID: 0}
+  score: {fileID: 2175631033874841859}
+--- !u!114 &7385225047770929310
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8435483116509825350}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23b974b928dd78840b2c96226e4a55be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rabbitPrefab: {fileID: 778282378860521684, guid: d212e5fb765029d43904e819e97f521f, type: 3}
+  rabbitCount: 15
+  boundary: {fileID: 11400000, guid: f664354e66081d94d91fdc8e1b670c0b, type: 2}
+  rabbits: {fileID: 11400000, guid: d647109b89881e342a2a80e68a36e386, type: 2}
 --- !u!1 &7389299849377367041
 GameObject:
   m_ObjectHideFlags: 0
@@ -9513,6 +9483,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b99b3f20eed89c54eb9806e79f8e8752, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &8435483116509825350
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4356529905799333106}
+  - component: {fileID: 7385225047770929310}
+  m_Layer: 0
+  m_Name: RabbitSpawnManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &8691668820121407940
 GameObject:
   m_ObjectHideFlags: 0
@@ -9632,4 +9619,4 @@ SceneRoots:
   - {fileID: 4698027324551460778}
   - {fileID: 3894859344558407470}
   - {fileID: 7716122490192928896}
-  - {fileID: 89004855}
+  - {fileID: 4356529905799333106}
