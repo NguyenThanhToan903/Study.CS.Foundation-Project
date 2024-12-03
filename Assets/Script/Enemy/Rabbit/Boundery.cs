@@ -11,8 +11,7 @@ public class Boundary : ScriptableObject
 
     public void OnDrawGizmos()
     {
-        Gizmos.color = Color.yellow;
-
+        Gizmos.color = Color.blue;
         Gizmos.DrawWireCube(Center, Size);
     }
 }

@@ -6,7 +6,6 @@ public class ScoreSystem : MonoBehaviour
     public TextMeshProUGUI score;
     private int scoreNum;
 
-
     private void Start()
     {
         scoreNum = 0;
