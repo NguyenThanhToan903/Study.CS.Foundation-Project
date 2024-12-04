@@ -1,9 +1,19 @@
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 
 public class ScoreSystem : MonoBehaviour
 {
     public TextMeshProUGUI score;
+
+    [SerializeField]
+    private GameObject winGame;
+
+    [SerializeField]
+    private TimerController timerController;
+
+    [SerializeField]
+    private RabbitSpawnManager rabbitSpawnManager;
+
     private int scoreNum;
 
     private void Start()
@@ -16,7 +26,9 @@ public class ScoreSystem : MonoBehaviour
     {
         scoreNum++;
         score.text = "Catched: " + scoreNum;
+        if (scoreNum >= rabbitSpawnManager.GetRabbitCount())
+        {
+            timerController.WinGame();
+        }
     }
-
-
 }

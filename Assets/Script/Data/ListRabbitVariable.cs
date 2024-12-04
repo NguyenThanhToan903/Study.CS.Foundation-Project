@@ -6,5 +6,3 @@ public class ListRabbitVariable : ScriptableObject
 {
     public List<RabbitMovement> rabbitMovement = new List<RabbitMovement>();
 }
-
-

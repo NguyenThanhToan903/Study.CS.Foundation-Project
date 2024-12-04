@@ -2,17 +2,28 @@
 
 public class RabbitMovement : MonoBehaviour
 {
-    [SerializeField] private float speed = 2f;
-    [SerializeField] private float distanceAvoid = 1f;
-    [SerializeField] private float distancePlayerAvoid = 2f;
-    [SerializeField] private float wallDetectionDistance = 3f;
-    [SerializeField] private float sideRayAngle = 40f;
+    [SerializeField]
+    public float speed;
 
-    private Vector2 movementDirection;
+    [SerializeField]
+    private float sideRayAngle = 40f;
+
+    [SerializeField]
+    private float distanceAvoid = 1f;
+
+    //[SerializeField]
+    //private float distancePlayerAvoid = 2f;
+
+    [SerializeField]
+    private float wallDetectionDistance = 3f;
+
     private float waitTimer;
     private float waitDuration;
+
     private bool isWaiting = false;
+
     private Vector2 Velocity;
+    private Vector2 movementDirection;
 
     private void Start()
     {
@@ -54,6 +65,7 @@ public class RabbitMovement : MonoBehaviour
         }
 
     }
+
 
     private void SetRandomDirection()
     {
