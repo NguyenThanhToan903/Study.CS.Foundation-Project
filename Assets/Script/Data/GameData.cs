@@ -4,27 +4,39 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "GameData", menuName = "Game Data", order = 1)]
 public class GameData : ScriptableObject
 {
-    public Dictionary<int, bool> levelStatus = new Dictionary<int, bool>();
+    public Dictionary<GameLevel, bool> levelStatus = new Dictionary<GameLevel, bool>();
 
-    public void InitializeLevels(int totalLevels)
+    private void OnEnable()
+    {
+        if (levelStatus.Count == 0)
+        {
+            InitializeLevels();
+        }
+    }
+
+    public void InitializeLevels()
     {
         levelStatus.Clear();
-        for (int i = 1; i <= totalLevels; i++)
+        foreach (GameLevel level in System.Enum.GetValues(typeof(GameLevel)))
         {
-            levelStatus.Add(i, i == 1);
+            levelStatus[level] = (level == GameLevel.Level1);
         }
     }
 
-    public void UnlockLevel(int levelID)
+    public void UnlockLevel(GameLevel level)
     {
-        if (levelStatus.ContainsKey(levelID))
+        if (levelStatus.ContainsKey(level))
         {
-            levelStatus[levelID] = true;
+            levelStatus[level] = true;
+        }
+        else
+        {
+            Debug.LogWarning($"Level {level} không tồn tại trong danh sách!");
         }
     }
 
-    public bool IsLevelUnlocked(int levelID)
+    public bool IsLevelUnlocked(GameLevel level)
     {
-        return levelStatus.ContainsKey(levelID) && levelStatus[levelID];
+        return levelStatus.ContainsKey(level) && levelStatus[level];
     }
 }

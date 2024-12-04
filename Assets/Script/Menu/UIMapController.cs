@@ -15,6 +15,9 @@ public class UIMapController : MonoBehaviour
     [SerializeField]
     private GameObject timerUI;
 
+    [SerializeField]
+    private GameManager gameManager;
+
     public void OnPausePressed()
     {
         Debug.Log("Button pause pressed");
@@ -48,48 +51,58 @@ public class UIMapController : MonoBehaviour
         {
             Debug.LogWarning("Pause game object is not assigned!");
         }
+        WinGame();
+        LoseGame();
+    }
+
+    public void OnNextPressed()
+    {
+        WinGame();
+        gameManager.LoadLevel();
+    }
+
+    private void WinGame()
+    {
         if (winGame != null)
         {
             bool isActive = winGame.activeSelf;
             if (isActive)
             {
-                Debug.LogWarning("Win game ");
-
                 winGame.SetActive(false);
-                Time.timeScale = 1f;
-            }
+                Debug.Log("Reloading the current scene");
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 
+                Time.timeScale = 1.0f;
+            }
         }
         else
         {
             Debug.LogWarning("Win game object is not assigned!");
         }
+    }
+
+    private void LoseGame()
+    {
         if (loseGame != null)
         {
             bool isActive = loseGame.activeSelf;
             if (isActive)
             {
-                Debug.LogWarning("Lose game ");
-
                 loseGame.SetActive(false);
-                Debug.LogWarning("Lose game ");
-                Time.timeScale = 1f;
+                Debug.Log("Reloading the current scene");
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+
+                Time.timeScale = 1.0f;
             }
         }
         else
         {
             Debug.LogWarning("Lose game object is not assigned!");
         }
-
-        Debug.Log("Reloading the current scene");
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-
-        Time.timeScale = 1f;
-
     }
-
     private void OnDestroy()
     {
         Time.timeScale = 1f;
     }
 }
+

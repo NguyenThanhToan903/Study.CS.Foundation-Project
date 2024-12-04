@@ -361,7 +361,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a16811b12dbef03408317926cc426a39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pauseMenu: {fileID: 973037414860926251}
+  pauseGame: {fileID: 0}
+  winGame: {fileID: 0}
+  loseGame: {fileID: 0}
+  timerUI: {fileID: 0}
+  gameManager: {fileID: 0}
 --- !u!1 &973037414860926251
 GameObject:
   m_ObjectHideFlags: 0
@@ -9933,8 +9937,8 @@ MonoBehaviour:
   boundary: {fileID: 11400000, guid: f664354e66081d94d91fdc8e1b670c0b, type: 2}
   rabbitPrefab: {fileID: 778282378860521684, guid: d212e5fb765029d43904e819e97f521f, type: 3}
   rabbits: {fileID: 11400000, guid: d647109b89881e342a2a80e68a36e386, type: 2}
-  rabbitCount: 10
-  rabbitSpeed: 4
+  rabbitCount: 15
+  rabbitSpeed: 2.5
 --- !u!222 &7390941860179790841
 CanvasRenderer:
   m_ObjectHideFlags: 0

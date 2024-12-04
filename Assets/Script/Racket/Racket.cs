@@ -1,45 +1,30 @@
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Racket : MonoBehaviour
 {
     [SerializeField]
-    private PlayerInput playerInput;
-
-    [SerializeField]
-    private ActiveRacket activeRacket;
+    private GameObject activeRacket;
 
     [SerializeField]
     private Transform racketCollider;
-
-    [SerializeField] private Vector3 input;
 
     private Animator animator;
 
     private void Awake()
     {
         animator = GetComponent<Animator>();
-        playerInput = new PlayerInput();
-    }
-
-    private void OnEnable()
-    {
-        playerInput.Enable();
-    }
-
-    private void Start()
-    {
-        playerInput.Combat.Catch.started += _ => Attack();
+        //DontDestroyOnLoad(gameObject);
     }
 
     private void Update()
     {
-        MouseFollowWithOffset();
-        GetInput();
-    }
+        if (Time.timeScale == 0f) return;
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            Attack();
+        }
 
-    private void GetInput()
-    {
-        input = InputManager.Instance.Input.normalized;
+        RacketRota();
     }
 
     private void Attack()
@@ -53,18 +38,15 @@ public class Racket : MonoBehaviour
         racketCollider.gameObject.SetActive(false);
     }
 
-    private void MouseFollowWithOffset()
+    private void RacketRota()
     {
         if (Time.timeScale == 1f)
         {
-            //Vector3 mousePos = Input.mousePosition;
             float temp = 0f;
-            //Vector3 playerScreenPoint = Camera.main.WorldToScreenPoint(playerMovement.transform.position);
 
-            //float angle = Mathf.Atan2(mousePos.y, mousePos.x) * Mathf.Rad2Deg;
-
-            if (input.x < 0) temp = -180f;
+            if (Input.GetAxis("Horizontal") < 0) temp = -180f;
             else temp = 0f;
+
             activeRacket.transform.rotation = Quaternion.Euler(0f, temp, 0f);
             racketCollider.transform.rotation = Quaternion.Euler(0f, temp, 0f);
         }
