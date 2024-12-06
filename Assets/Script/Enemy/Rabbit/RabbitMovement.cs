@@ -11,13 +11,11 @@ public class RabbitMovement : MonoBehaviour
     [SerializeField]
     private float distanceAvoid = 1f;
 
-    //[SerializeField]
-    //private float distancePlayerAvoid = 2f;
-
     [SerializeField]
     private float wallDetectionDistance = 3f;
 
     private float waitTimer;
+
     private float waitDuration;
 
     private bool isWaiting = false;

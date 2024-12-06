@@ -18,6 +18,8 @@ public class UIMapController : MonoBehaviour
     [SerializeField]
     private GameManager gameManager;
 
+
+
     public void OnPausePressed()
     {
         Debug.Log("Button pause pressed");
