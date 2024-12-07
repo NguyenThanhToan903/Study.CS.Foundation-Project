@@ -1,6 +1,6 @@
-using UnityEngine;
+//using UnityEngine;
 
-public class ScoreSource : MonoBehaviour
-{
+//public class ScoreSource : MonoBehaviour
+//{
 
-}
+//}

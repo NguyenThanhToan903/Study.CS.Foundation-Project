@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &8429291843764654473
+--- !u!1 &5565717289249660231
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,10 +8,12 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4698027323294951247}
-  - component: {fileID: 3758774218810338025}
-  - component: {fileID: 7135935916117431704}
-  - component: {fileID: 1601945670514405461}
+  - component: {fileID: 185657695348611935}
+  - component: {fileID: 1421507907312075068}
+  - component: {fileID: 1875451336169458097}
+  - component: {fileID: 9169037026442047330}
+  - component: {fileID: 2330728641644579042}
+  - component: {fileID: 6417469408714234449}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -19,13 +21,13 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4698027323294951247
+--- !u!4 &185657695348611935
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8429291843764654473}
+  m_GameObject: {fileID: 5565717289249660231}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.06333256, y: -0.4622221, z: 0}
@@ -34,13 +36,13 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3758774218810338025
+--- !u!114 &1421507907312075068
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8429291843764654473}
+  m_GameObject: {fileID: 5565717289249660231}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
@@ -49,13 +51,13 @@ MonoBehaviour:
   m_FirstSelected: {fileID: 0}
   m_sendNavigationEvents: 1
   m_DragThreshold: 10
---- !u!114 &7135935916117431704
+--- !u!114 &1875451336169458097
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8429291843764654473}
+  m_GameObject: {fileID: 5565717289249660231}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 01614664b831546d2ae94a42149d80ac, type: 3}
@@ -79,16 +81,47 @@ MonoBehaviour:
   m_DeselectOnBackgroundClick: 1
   m_PointerBehavior: 0
   m_CursorLockBehavior: 0
---- !u!114 &1601945670514405461
+--- !u!114 &9169037026442047330
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8429291843764654473}
+  m_GameObject: {fileID: 5565717289249660231}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ea4028dc5c137b42b5c2904f711e1e8, type: 3}
+  m_Script: {fileID: 11500000, guid: a16811b12dbef03408317926cc426a39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pauseMenuGame: {fileID: 0}
+  pauseGame: {fileID: 0}
+  winGame: {fileID: 0}
+  loseGame: {fileID: 0}
+  timerUI: {fileID: 0}
+  gameManager: {fileID: 6417469408714234449}
+--- !u!114 &2330728641644579042
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5565717289249660231}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b99b3f20eed89c54eb9806e79f8e8752, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6417469408714234449
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5565717289249660231}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df708a5fdb0c4084880a3310918ae38a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameData: {fileID: 11400000, guid: b5477471ad297e24ca28c480bb49c71e, type: 2}
+  currentLevel: 0
+  nextLevel: 0

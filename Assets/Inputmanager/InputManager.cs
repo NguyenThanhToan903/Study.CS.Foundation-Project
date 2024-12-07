@@ -13,6 +13,11 @@ public class InputManager : MonoBehaviour
         InputManager.instance = this;
     }
 
+    private void Start()
+    {
+        InputManager.instance = this;
+    }
+
     private void FixedUpdate()
     {
         this.GetInput();

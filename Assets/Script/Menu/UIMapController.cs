@@ -1,15 +1,33 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class UIMapController : MonoBehaviour
 {
-    [SerializeField] private GameObject pauseMenu;
+    [SerializeField]
+    private GameObject pauseGame;
+
+    [SerializeField]
+    private GameObject winGame;
+
+    [SerializeField]
+    private GameObject loseGame;
+
+    [SerializeField]
+    private GameObject timerUI;
+
+    [SerializeField]
+    private GameManager gameManager;
+
     public void OnPausePressed()
     {
         Debug.Log("Button pause pressed");
-        if (pauseMenu != null)
+        if (pauseGame != null)
         {
-            bool isActive = pauseMenu.activeSelf;
-            pauseMenu.SetActive(!isActive);
+            bool isActive = pauseGame.activeSelf;
+            bool isTimerUIActive = timerUI.activeSelf;
+            AudioManager.Instance.PlaySFX(AudioManager.Instance.buttonClip);
+            pauseGame.SetActive(!isActive);
+            timerUI.SetActive(!isActive);
             Time.timeScale = isActive ? 1f : 0f;
         }
         else
@@ -20,19 +38,72 @@ public class UIMapController : MonoBehaviour
 
     public void OnResumePressed()
     {
-        if (pauseMenu != null)
+        if (pauseGame != null)
         {
-            pauseMenu.SetActive(false);
-            Time.timeScale = 1f;
+            bool isActive = pauseGame.activeSelf;
+            if (isActive)
+            {
+                pauseGame.SetActive(false);
+                Time.timeScale = 1f;
+            }
         }
         else
         {
-            Debug.LogWarning("Pause menu object is not assigned!");
+            Debug.LogWarning("Pause game object is not assigned!");
+        }
+        WinGame();
+        LoseGame();
+        AudioManager.Instance.PlaySFX(AudioManager.Instance.buttonClip);
+    }
+
+    public void OnNextPressed()
+    {
+        WinGame();
+        gameManager.LoadLevel();
+    }
+
+    private void WinGame()
+    {
+        if (winGame != null)
+        {
+            bool isActive = winGame.activeSelf;
+            if (isActive)
+            {
+                winGame.SetActive(false);
+                Debug.Log("Reloading the current scene");
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+
+                Time.timeScale = 1.0f;
+            }
+        }
+        else
+        {
+            Debug.LogWarning("Win game object is not assigned!");
         }
     }
 
+    private void LoseGame()
+    {
+        if (loseGame != null)
+        {
+            bool isActive = loseGame.activeSelf;
+            if (isActive)
+            {
+                loseGame.SetActive(false);
+                Debug.Log("Reloading the current scene");
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+
+                Time.timeScale = 1.0f;
+            }
+        }
+        else
+        {
+            Debug.LogWarning("Lose game object is not assigned!");
+        }
+    }
     private void OnDestroy()
     {
         Time.timeScale = 1f;
     }
 }
+
