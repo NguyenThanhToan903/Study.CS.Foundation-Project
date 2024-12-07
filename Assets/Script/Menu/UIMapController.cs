@@ -27,7 +27,7 @@ public class UIMapController : MonoBehaviour
             bool isTimerUIActive = timerUI.activeSelf;
             AudioManager.Instance.PlaySFX(AudioManager.Instance.buttonClip);
             pauseGame.SetActive(!isActive);
-            timerUI.SetActive(!isActive);
+            timerUI.SetActive(!isTimerUIActive);
             Time.timeScale = isActive ? 1f : 0f;
         }
         else
@@ -41,9 +41,11 @@ public class UIMapController : MonoBehaviour
         if (pauseGame != null)
         {
             bool isActive = pauseGame.activeSelf;
+            bool isTimerUIActive = timerUI.activeSelf;
             if (isActive)
             {
                 pauseGame.SetActive(false);
+                timerUI.SetActive(!isTimerUIActive);
                 Time.timeScale = 1f;
             }
         }

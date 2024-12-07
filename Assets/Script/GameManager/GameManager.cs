@@ -66,7 +66,6 @@ public class GameManager : MonoBehaviour
             return (GameLevel)nextLevelIndex;
         }
 
-        // Không có level tiếp theo
         return GameLevel.None;
     }
 }

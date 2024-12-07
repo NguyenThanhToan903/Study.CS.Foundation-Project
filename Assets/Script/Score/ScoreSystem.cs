@@ -32,8 +32,8 @@ public class ScoreSystem : MonoBehaviour
         score.text = "Catched: " + scoreNum;
         if (scoreNum >= rabbitSpawnManager.GetRabbitCount())
         {
-            timerController.WinGame();
             gameManager.UnlockNextLevel();
+            timerController.WinGame();
         }
     }
 }

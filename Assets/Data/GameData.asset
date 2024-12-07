@@ -12,5 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 529583dae6927da40ba9ff5987f1e4fb, type: 3}
   m_Name: GameData
   m_EditorClassIdentifier: 
-  playerScore: 0
-  playerName: 
+  levels:
+  - level: 0
+    isUnlocked: 1
+  - level: 1
+    isUnlocked: 0
+  - level: 2
+    isUnlocked: 0
+  - level: 3
+    isUnlocked: 0
