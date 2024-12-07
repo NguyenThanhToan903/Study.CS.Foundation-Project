@@ -57,6 +57,23 @@ public class AudioManager : MonoBehaviour
         vfxAudioSource.PlayOneShot(sfxClip);
     }
 
+    public void ToggleMusic()
+    {
+        musicAudioSource.mute = !musicAudioSource.mute;
+    }
 
+    public void ToggleSFX()
+    {
+        vfxAudioSource.mute = !vfxAudioSource.mute;
+    }
 
+    public void MusicVolume(float volume)
+    {
+        musicAudioSource.volume = volume;
+    }
+
+    public void SFXVolume(float volume)
+    {
+        vfxAudioSource.volume = volume;
+    }
 }
