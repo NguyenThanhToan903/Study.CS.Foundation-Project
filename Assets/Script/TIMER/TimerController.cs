@@ -21,9 +21,6 @@ public class TimerController : MonoBehaviour
     [SerializeField]
     private float maxTime = 10.0f;
 
-    [SerializeField]
-    private AudioManager audioManager;
-
     private void Start()
     {
         timeRemaining = maxTime;
@@ -48,7 +45,7 @@ public class TimerController : MonoBehaviour
     {
         winGame.SetActive(true);
         timerUI.SetActive(false);
-        audioManager.PlaySFX(audioManager.winClip);
+        AudioManager.Instance.PlaySFX(AudioManager.Instance.winClip);
         Time.timeScale = 0.0f;
         Debug.Log("You caught all the rabbits!");
     }

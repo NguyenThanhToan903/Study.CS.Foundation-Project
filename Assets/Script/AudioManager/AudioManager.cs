@@ -17,7 +17,24 @@ public class AudioManager : MonoBehaviour
     [SerializeField]
     public AudioClip catchClip;
 
+    [SerializeField]
+    public AudioClip buttonClip;
 
+
+    public static AudioManager Instance { get; private set; }
+
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+    }
 
 
     void Start()
@@ -39,6 +56,7 @@ public class AudioManager : MonoBehaviour
         vfxAudioSource.clip = sfxClip;
         vfxAudioSource.PlayOneShot(sfxClip);
     }
+
 
 
 }

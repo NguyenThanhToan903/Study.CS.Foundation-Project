@@ -18,8 +18,6 @@ public class UIMapController : MonoBehaviour
     [SerializeField]
     private GameManager gameManager;
 
-
-
     public void OnPausePressed()
     {
         Debug.Log("Button pause pressed");
@@ -27,6 +25,7 @@ public class UIMapController : MonoBehaviour
         {
             bool isActive = pauseGame.activeSelf;
             bool isTimerUIActive = timerUI.activeSelf;
+            AudioManager.Instance.PlaySFX(AudioManager.Instance.buttonClip);
             pauseGame.SetActive(!isActive);
             timerUI.SetActive(!isActive);
             Time.timeScale = isActive ? 1f : 0f;
@@ -44,7 +43,6 @@ public class UIMapController : MonoBehaviour
             bool isActive = pauseGame.activeSelf;
             if (isActive)
             {
-                Debug.LogWarning("Pause game ");
                 pauseGame.SetActive(false);
                 Time.timeScale = 1f;
             }
@@ -55,6 +53,7 @@ public class UIMapController : MonoBehaviour
         }
         WinGame();
         LoseGame();
+        AudioManager.Instance.PlaySFX(AudioManager.Instance.buttonClip);
     }
 
     public void OnNextPressed()
