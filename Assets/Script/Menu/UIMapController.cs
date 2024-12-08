@@ -61,7 +61,7 @@ public class UIMapController : MonoBehaviour
     public void OnNextPressed()
     {
         WinGame();
-        gameManager.LoadLevel();
+        gameManager.LoadNextLevel();
     }
 
     private void WinGame()
