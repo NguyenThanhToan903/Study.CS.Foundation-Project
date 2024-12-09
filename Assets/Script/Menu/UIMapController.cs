@@ -15,12 +15,10 @@ public class UIMapController : MonoBehaviour
     [SerializeField]
     private GameObject timerUI;
 
-    [SerializeField]
-    private GameManager gameManager;
 
     public void OnPausePressed()
     {
-        Debug.Log("Button pause pressed");
+        Debug.Log("Nhan Button pause");
         if (pauseGame != null)
         {
             bool isActive = pauseGame.activeSelf;
@@ -32,7 +30,7 @@ public class UIMapController : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("Pause menu object is not assigned!");
+            Debug.LogWarning("Pause menu chua duoc gan");
         }
     }
 
@@ -51,7 +49,7 @@ public class UIMapController : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("Pause game object is not assigned!");
+            Debug.LogWarning("Pause game chua duoc gan");
         }
         WinGame();
         LoseGame();
@@ -60,8 +58,28 @@ public class UIMapController : MonoBehaviour
 
     public void OnNextPressed()
     {
-        WinGame();
-        gameManager.LoadNextLevel();
+        if (winGame != null)
+        {
+            bool isActive = winGame.activeSelf;
+            if (isActive)
+            {
+                winGame.SetActive(false);
+                string nextLevelName = GameManager.Instance.GetNextLevelName(SceneManager.GetActiveScene().name);
+                if (GameManager.Instance.IsLevelUnlocked(nextLevelName))
+                {
+                    SceneManager.LoadScene(nextLevelName);
+                }
+                else
+                {
+                    Debug.LogWarning($"{nextLevelName} chua duoc mo khoa");
+                }
+                Time.timeScale = 1.0f;
+            }
+        }
+        else
+        {
+            Debug.LogWarning("WinGame chua duoc gan");
+        }
     }
 
     private void WinGame()
@@ -72,15 +90,14 @@ public class UIMapController : MonoBehaviour
             if (isActive)
             {
                 winGame.SetActive(false);
-                Debug.Log("Reloading the current scene");
+                Debug.Log("Choi lai");
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-
                 Time.timeScale = 1.0f;
             }
         }
         else
         {
-            Debug.LogWarning("Win game object is not assigned!");
+            Debug.LogWarning("WinGame chua duoc gan");
         }
     }
 
@@ -92,15 +109,14 @@ public class UIMapController : MonoBehaviour
             if (isActive)
             {
                 loseGame.SetActive(false);
-                Debug.Log("Reloading the current scene");
+                Debug.Log("Choi lai");
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-
                 Time.timeScale = 1.0f;
             }
         }
         else
         {
-            Debug.LogWarning("Lose game object is not assigned!");
+            Debug.LogWarning("Lose game chua duoc gan");
         }
     }
     private void OnDestroy()

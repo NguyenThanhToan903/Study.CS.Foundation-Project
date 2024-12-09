@@ -7676,21 +7676,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scoreSystem: {fileID: 8684510297947292278}
---- !u!114 &5185832594540187927
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6036458796733502977}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df708a5fdb0c4084880a3310918ae38a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gameData: {fileID: 11400000, guid: b5477471ad297e24ca28c480bb49c71e, type: 2}
-  currentLevel: 0
-  nextLevel: 0
 --- !u!114 &5251460091351886388
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9103,7 +9088,6 @@ GameObject:
   - component: {fileID: 359821933698958071}
   - component: {fileID: 7045423882426623012}
   - component: {fileID: 4512818413900465060}
-  - component: {fileID: 5185832594540187927}
   - component: {fileID: 7045423882426623013}
   m_Layer: 0
   m_Name: EventSystem
@@ -9991,7 +9975,7 @@ MonoBehaviour:
   winGame: {fileID: 5939246766256142070}
   loseGame: {fileID: 6866480912448086519}
   timerUI: {fileID: 8693160142551734854}
-  gameManager: {fileID: 5185832594540187927}
+  listGameData: {fileID: 11400000, guid: 5693b4471f0954c4897a51390b4cd6aa, type: 2}
 --- !u!114 &7045423882426623013
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11007,7 +10991,7 @@ MonoBehaviour:
   timerController: {fileID: 732039379221641434}
   rabbitSpawnManager: {fileID: 7960743267106660527}
   scoreNum: 0
-  gameManager: {fileID: 5185832594540187927}
+  gameManager: {fileID: 0}
 --- !u!1 &8693160142551734854
 GameObject:
   m_ObjectHideFlags: 0

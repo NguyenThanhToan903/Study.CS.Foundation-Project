@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class TimerController : MonoBehaviour
@@ -46,7 +47,23 @@ public class TimerController : MonoBehaviour
         winGame.SetActive(true);
         timerUI.SetActive(false);
         AudioManager.Instance.PlaySFX(AudioManager.Instance.winClip);
+        string nextLevel = GameManager.Instance.GetNextLevelName(SceneManager.GetActiveScene().name);
+        if (nextLevel != null)
+        {
+            if (!GameManager.Instance.IsLevelUnlocked(nextLevel))
+            {
+                GameManager.Instance.UnlockLevel(nextLevel);
+            }
+            else
+            {
+                Debug.Log($"{nextLevel} chua duoc mo khoa");
+            }
+        }
+        else
+        {
+            Debug.Log($"{nextLevel} la null");
+        }
         Time.timeScale = 0.0f;
-        Debug.Log("You caught all the rabbits!");
+        Debug.Log("WinGame ====================");
     }
 }

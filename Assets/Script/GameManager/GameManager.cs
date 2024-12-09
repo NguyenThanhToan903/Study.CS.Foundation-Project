@@ -1,94 +1,80 @@
-﻿using UnityEngine;
-using UnityEngine.SceneManagement;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public GameData gameData;
+    public static GameManager Instance { get; private set; }
 
-    public GameLevel currentLevel;
-    public GameLevel nextLevel;
-
-    private void OnEnable()
+    [System.Serializable]
+    public class LevelData
     {
-        if (gameData == null)
-        {
-            gameData = Resources.Load<GameData>("GameData");
-            if (gameData == null)
-            {
-                Debug.LogError("Không tìm thấy GameData trong Resources");
-            }
-            else
-            {
-                gameData.InitializeLevels();
-            }
-        }
+        public string levelName;
+        public bool isUnlocked;
     }
 
+    public List<LevelData> Levels = new List<LevelData>();
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
     private void Start()
     {
-        if (gameData == null)
-        {
-            Debug.LogError("GameData chưa được gán trong Inspector!");
-            return;
-        }
+        InitializeLevels();
+    }
 
-        // Khởi tạo dữ liệu nếu chưa có
-        if (gameData.GetLevels().Count == 0)
+    private void InitializeLevels()
+    {
+        if (Levels.Count == 0)
         {
-            gameData.InitializeLevels();
-        }
-
-        // Lấy currentLevel từ tên Scene
-        string activeSceneName = SceneManager.GetActiveScene().name;
-
-        // Tìm level tương ứng với scene hiện tại
-        foreach (var levelStatus in gameData.GetLevels())
-        {
-            if (GameLevelMap.LevelToSceneName.ContainsValue(activeSceneName))
-            {
-                currentLevel = levelStatus.level;
-                nextLevel = GetNextLevel(currentLevel);
-                break;
-            }
+            Levels.Add(new LevelData { levelName = "GameLevel1", isUnlocked = true });
+            Levels.Add(new LevelData { levelName = "GameLevel2", isUnlocked = false });
+            Levels.Add(new LevelData { levelName = "GameLevel3", isUnlocked = false });
         }
     }
 
-    public void UnlockNextLevel()
+    public bool IsLevelUnlocked(string levelName)
     {
-        if (nextLevel != GameLevel.None)
+        var level = Levels.Find(l => l.levelName == levelName);
+        return level != null && level.isUnlocked;
+    }
+
+    public void UnlockLevel(string levelName)
+    {
+        int index = Levels.FindIndex(l => l.levelName == levelName);
+        if (index >= 0 && index < Levels.Count)
         {
-            gameData.UnlockLevel(nextLevel);
-            Debug.Log($"Level {nextLevel} đã được mở khóa!");
-        }
-        else
-        {
-            Debug.LogWarning("Không có level tiếp theo để mở khóa!");
+            Levels[index].isUnlocked = true;
+            Debug.Log($"{Levels[index].levelName} da duoc mo khoa");
         }
     }
 
-    public void LoadNextLevel()
+    public string GetNextLevelName(string currentLevelName)
     {
-        if (gameData.IsLevelUnlocked(nextLevel))
+        int index = Levels.FindIndex(l => l.levelName == currentLevelName);
+        if (index >= 0 && index + 1 < Levels.Count)
         {
-            string sceneName = GameLevelMap.LevelToSceneName[nextLevel];
-            SceneManager.LoadScene(sceneName);
+            return Levels[index + 1].levelName;
         }
-        else
-        {
-            Debug.LogWarning($"Level {nextLevel} đang bị khóa!");
-        }
+        return null;
     }
 
-    private GameLevel GetNextLevel(GameLevel currentLevel)
+    public void LockLevel(string levelName)
     {
-        int nextLevelIndex = (int)currentLevel + 1;
-
-        if (System.Enum.IsDefined(typeof(GameLevel), nextLevelIndex))
+        int index = Levels.FindIndex(l => l.levelName == levelName);
+        if (index >= 0 && index < Levels.Count)
         {
-            return (GameLevel)nextLevelIndex;
+            Levels[index].isUnlocked = false;
+            Debug.Log($"{Levels[index].levelName} da duoc khoa");
         }
-
-        return GameLevel.None;
     }
 }

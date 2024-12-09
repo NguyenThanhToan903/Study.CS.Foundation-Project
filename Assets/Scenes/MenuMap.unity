@@ -1651,7 +1651,6 @@ GameObject:
   - component: {fileID: 6779061044418551432}
   - component: {fileID: 8944501836165098592}
   - component: {fileID: 8944501836165098593}
-  - component: {fileID: 8944501836165098594}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -1984,8 +1983,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   map2UI: {fileID: 841155295}
   map3UI: {fileID: 9105082854443572436}
-  gameManager: {fileID: 8944501836165098594}
-  gameData: {fileID: 11400000, guid: b5477471ad297e24ca28c480bb49c71e, type: 2}
+  listGameData: {fileID: 11400000, guid: 5693b4471f0954c4897a51390b4cd6aa, type: 2}
 --- !u!114 &8944501836165098593
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1998,21 +1996,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b99b3f20eed89c54eb9806e79f8e8752, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &8944501836165098594
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5325827306396097177}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df708a5fdb0c4084880a3310918ae38a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gameData: {fileID: 11400000, guid: b5477471ad297e24ca28c480bb49c71e, type: 2}
-  currentLevel: 0
-  nextLevel: 0
 --- !u!114 &9105082854443572436
 MonoBehaviour:
   m_ObjectHideFlags: 0
