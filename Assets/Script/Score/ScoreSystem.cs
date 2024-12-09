@@ -17,8 +17,6 @@ public class ScoreSystem : MonoBehaviour
     [SerializeField]
     private int scoreNum;
 
-    [SerializeField]
-    private GameManager gameManager;
 
     private void Start()
     {
@@ -33,7 +31,6 @@ public class ScoreSystem : MonoBehaviour
         if (scoreNum >= rabbitSpawnManager.GetRabbitCount())
         {
             timerController.WinGame();
-            gameManager.UnlockNextLevel();
         }
     }
 }

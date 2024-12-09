@@ -7,7 +7,6 @@ public class BackToMenuController : MonoBehaviour
     {
         Debug.Log("Back to menu ");
         AudioManager.Instance.PlaySFX(AudioManager.Instance.buttonClip);
-
         SceneManager.LoadScene("Menu");
     }
 }

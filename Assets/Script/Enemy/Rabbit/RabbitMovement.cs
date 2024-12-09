@@ -51,7 +51,6 @@ public class RabbitMovement : MonoBehaviour
                 isWaiting = false;
                 waitTimer = 0f;
 
-                Debug.Log("Changing direction after waiting...");
                 SetRandomDirection();
             }
         }
@@ -95,16 +94,12 @@ public class RabbitMovement : MonoBehaviour
             Vector2 wallNormal = hit.normal;
             Vector2 reflectedDirection = Vector2.Reflect(movementDirection, wallNormal);
 
-            // Thêm random nhỏ để đa dạng hóa hướng
             float randomAngle = Random.Range(-30f, 30f);
             Vector2 adjustedDirection = RotateVector(reflectedDirection, randomAngle);
 
-            // Kết hợp tránh thỏ
             Vector2 finalDirection = CombineAvoidance(adjustedDirection);
 
             movementDirection = finalDirection.normalized;
-
-            Debug.Log($"Adjusted direction near wall: {movementDirection}");
 
             Debug.DrawLine(hit.point, hit.point + wallNormal, Color.red, 1f);
             Debug.DrawLine(hit.point, hit.point + adjustedDirection, Color.green, 1f);
@@ -127,11 +122,10 @@ public class RabbitMovement : MonoBehaviour
                 Vector2 selfPosition = transform.position;
 
                 Vector2 avoidVector = (selfPosition - otherRabbitPosition).normalized;
-                avoidanceVector += avoidVector; // Tổng hợp hướng tránh thỏ
+                avoidanceVector += avoidVector;
             }
         }
 
-        // Kết hợp hướng tránh tường và tránh thỏ, ưu tiên hướng tránh tường
         Vector2 combinedDirection = (baseDirection + avoidanceVector * 0.5f).normalized;
         return combinedDirection;
     }
@@ -151,35 +145,29 @@ public class RabbitMovement : MonoBehaviour
                 Vector2 selfPosition = transform.position;
 
                 Vector2 avoidVector = (selfPosition - otherRabbitPosition).normalized;
-                accumulatedAvoidVector += avoidVector; // Tổng hợp hướng tránh
+                accumulatedAvoidVector += avoidVector;
             }
         }
 
         if (hits.Length > 1)
         {
-            // Nếu kẹt giữa nhiều thỏ, tăng cường tránh va chạm
             movementDirection = ClampDirection(movementDirection, accumulatedAvoidVector.normalized, 60f);
-            Debug.Log("Avoiding multiple rabbits...");
         }
         else if (accumulatedAvoidVector != Vector2.zero)
         {
-            // Chỉ cần tránh một thỏ, giữ góc trong phạm vi hẹp
             movementDirection = ClampDirection(movementDirection, accumulatedAvoidVector.normalized, 30f);
         }
     }
 
     private Vector2 ClampDirection(Vector2 currentDirection, Vector2 targetDirection, float maxAngle)
     {
-        // Tính góc giữa hai hướng
         float angle = Vector2.SignedAngle(currentDirection, targetDirection);
 
-        // Giới hạn góc trong phạm vi [-maxAngle, maxAngle]
         if (angle > maxAngle)
             angle = maxAngle;
         else if (angle < -maxAngle)
             angle = -maxAngle;
 
-        // Xoay hướng hiện tại với góc đã giới hạn
         return RotateVector(currentDirection, angle).normalized;
     }
 
@@ -190,25 +178,19 @@ public class RabbitMovement : MonoBehaviour
 
         if (hits.Length > 1 && isNearWall)
         {
-            // Chọn góc lớn ngẫu nhiên rời xa tường
             float randomAngle = Random.Range(90f, 180f);
             Vector2 escapeDirection = RotateVector(movementDirection, randomAngle).normalized;
 
-            // Kiểm tra hướng thoát không xuyên qua tường
             if (!CastRay(transform.position, escapeDirection, wallDetectionDistance))
             {
                 movementDirection = escapeDirection;
-                Debug.Log("Stuck detected near wall! Adjusting direction...");
             }
             else
             {
-                // Nếu không thể thoát theo góc lớn, chọn góc nhỏ và chờ thêm thời gian
                 randomAngle = Random.Range(-30f, 30f);
                 movementDirection = RotateVector(movementDirection, randomAngle).normalized;
-                Debug.Log("Stuck and trapped! Waiting for escape...");
             }
 
-            // Thêm thời gian chờ để tránh đổi hướng liên tục
             isWaiting = true;
             waitDuration = Random.Range(0.5f, 1f);
         }

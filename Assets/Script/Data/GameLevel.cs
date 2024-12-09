@@ -1,19 +1,8 @@
-using System.Collections.Generic;
+using UnityEngine;
 
-public enum GameLevel
+[CreateAssetMenu(menuName = "ScriptableObject/Game Level Variable")]
+public class GameLevel : ScriptableObject
 {
-    Level1,
-    Level2,
-    Level3,
-    None
-}
-
-public static class GameLevelMap
-{
-    public static readonly Dictionary<GameLevel, string> LevelToSceneName = new Dictionary<GameLevel, string>
-    {
-        { GameLevel.Level1, "GameLevel1" },
-        { GameLevel.Level2, "GameLevel2" },
-        { GameLevel.Level3, "GameLevel3" }
-    };
+    public string level;
+    public bool isUnlocked;
 }
