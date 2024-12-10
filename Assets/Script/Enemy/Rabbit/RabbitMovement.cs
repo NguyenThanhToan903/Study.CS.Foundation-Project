@@ -129,7 +129,7 @@ public class RabbitMovement : MonoBehaviour
     private void AvoidOtherRabbits()
     {
         Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, distanceAvoid);
-        Vector2 accumulatedAvoidVector = Vector2.zero;
+        Vector2 mainAvoidVector = Vector2.zero;
 
         foreach (Collider2D hit in hits)
         {
@@ -141,20 +141,17 @@ public class RabbitMovement : MonoBehaviour
                 Vector2 selfPosition = transform.position;
 
                 Vector2 avoidVector = (selfPosition - otherRabbitPosition).normalized;
-                accumulatedAvoidVector += avoidVector; // Tổng hợp hướng tránh
+                mainAvoidVector += avoidVector;
             }
         }
 
         if (hits.Length > 1)
         {
-            // Nếu kẹt giữa nhiều thỏ, tăng cường tránh va chạm
-            movementDirection = ClampDirection(movementDirection, accumulatedAvoidVector.normalized, 60f);
-            Debug.Log("Avoiding multiple rabbits...");
+            movementDirection = ClampDirection(movementDirection, mainAvoidVector.normalized, 60f);
         }
-        else if (accumulatedAvoidVector != Vector2.zero)
+        else if (mainAvoidVector != Vector2.zero)
         {
-            // Chỉ cần tránh một thỏ, giữ góc trong phạm vi hẹp
-            movementDirection = ClampDirection(movementDirection, accumulatedAvoidVector.normalized, 30f);
+            movementDirection = ClampDirection(movementDirection, mainAvoidVector.normalized, 30f);
         }
     }
 
