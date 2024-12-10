@@ -6,6 +6,10 @@ TagManager:
   tags:
   - Rabbit
   - Wall
+  - Audio
+  - map2
+  - map3
+  - map1
   layers:
   - Default
   - TransparentFX

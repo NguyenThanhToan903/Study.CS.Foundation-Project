@@ -7,19 +7,14 @@ public class MenuController : MonoBehaviour
     {
         Debug.Log("Play button pressed");
         Time.timeScale = 1.0f;
+        AudioManager.Instance.PlaySFX(AudioManager.Instance.buttonClip);
         SceneManager.LoadScene("GameLevel1");
-
-    }
-
-    public void OnSettingsButtonPressed()
-    {
-        Debug.Log("Settings button pressed");
-        SceneManager.LoadScene("Setting");
     }
 
     public void OnOptionButtonPressed()
     {
         Debug.Log("Quit button pressed");
+        AudioManager.Instance.PlaySFX(AudioManager.Instance.buttonClip);
         SceneManager.LoadScene("MenuMap");
     }
 }

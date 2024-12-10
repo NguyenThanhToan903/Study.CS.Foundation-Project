@@ -183,7 +183,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 10
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -214,8 +214,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 =======
+=======
+>>>>>>> da0bf1fbf8a0b16594e703b3a108bd0baebbc87f
 --- !u!1 &5876270318766850
 GameObject:
   m_ObjectHideFlags: 0
@@ -14303,7 +14306,11 @@ MonoBehaviour:
   boundary: {fileID: 11400000, guid: f664354e66081d94d91fdc8e1b670c0b, type: 2}
   rabbitPrefab: {fileID: 778282378860521684, guid: d212e5fb765029d43904e819e97f521f, type: 3}
   rabbits: {fileID: 11400000, guid: d647109b89881e342a2a80e68a36e386, type: 2}
+<<<<<<< HEAD
   rabbitCount: 12
+=======
+  rabbitCount: 3
+>>>>>>> da0bf1fbf8a0b16594e703b3a108bd0baebbc87f
   rabbitSpeed: 2.5
 --- !u!1 &7388546313455290826
 GameObject:
@@ -16064,9 +16071,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2456584166442449094}
   m_CullTransparentMesh: 1
+<<<<<<< HEAD
 >>>>>>> Stashed changes
+=======
+>>>>>>> da0bf1fbf8a0b16594e703b3a108bd0baebbc87f
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1941043815}
+  - {fileID: 4356529906392596703}
+  - {fileID: 8084243392772655372}
+  - {fileID: 5805311825295188527}
+  - {fileID: 4579986953123919109}
+  - {fileID: 6570683684935750051}
+  - {fileID: 3894859344590656411}
+  - {fileID: 8068553701524331148}

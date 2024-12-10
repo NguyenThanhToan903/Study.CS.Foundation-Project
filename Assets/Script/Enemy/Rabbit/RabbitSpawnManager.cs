@@ -2,10 +2,20 @@
 
 public class RabbitSpawnManager : MonoBehaviour
 {
-    [SerializeField] private GameObject rabbitPrefab;
-    [SerializeField] private int rabbitCount = 5;
-    [SerializeField] private Boundary boundary;
-    [SerializeField] private ListRabbitVariable rabbits;
+    [SerializeField]
+    private Boundary boundary;
+
+    [SerializeField]
+    private GameObject rabbitPrefab;
+
+    [SerializeField]
+    private ListRabbitVariable rabbits;
+
+    [SerializeField]
+    private int rabbitCount = 5;
+
+    [SerializeField]
+    private float rabbitSpeed = 2.0f;
 
     private void Start()
     {
@@ -22,7 +32,6 @@ public class RabbitSpawnManager : MonoBehaviour
         }
     }
 
-
     private Vector2 RandomPosition()
     {
         return new Vector2(
@@ -34,6 +43,13 @@ public class RabbitSpawnManager : MonoBehaviour
     private void SummonTheRabbits(Vector2 position)
     {
         GameObject rabbit = Instantiate(rabbitPrefab, position, Quaternion.identity);
-        rabbits.rabbitMovement.Add(rabbit.GetComponent<RabbitMovement>());
+        RabbitMovement rabbitMovement = rabbit.GetComponent<RabbitMovement>();
+        rabbitMovement.speed = rabbitSpeed;
+        rabbits.rabbitMovement.Add(rabbitMovement);
+    }
+
+    public float GetRabbitCount()
+    {
+        return this.rabbitCount;
     }
 }
